@@ -1,3 +1,5 @@
-# M1_Asteroids
+# Projet de Programmation Avancée
 
-Réalisation d'un remake du jeu Asteroids.
+## Auteurs
+Nicolas Faucheux<br />
+Ezriel Steinberg<br />
