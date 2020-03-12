@@ -4,15 +4,17 @@
 
 #include "sources/point.cpp"
 #include "sources/ship.cpp"
+#include "sources/game.cpp"
+
 
 void draw(SDL_Renderer* renderer)
 {
 	int x,y;
 	if ( SDL_GetMouseState(&x,&y) & SDL_BUTTON(SDL_BUTTON_LEFT) ) // one & it is for bits AND
 	{
+		//Ship s = Ship();
+		//s.draw(renderer);
 		// UTILISER COLOR
-		Ship s = Ship();
-		s.draw(renderer);
 		SDL_SetRenderDrawColor(renderer, 255,255,255,255);
 		SDL_RenderDrawPoint(renderer,x,y);
 	}
@@ -22,9 +24,7 @@ void draw(SDL_Renderer* renderer)
 
 int main(int argc, char** argv)
 {
-	if (SDL_Init(SDL_INIT_VIDEO) != 0)
-	{
-		std::cerr << "Pb init SDL"<< std::endl;
+	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
 		return 0;
 	}
 
@@ -40,19 +40,55 @@ int main(int argc, char** argv)
 	std::cout << "Point : " << titi.getX() << " : " << titi.getY() << std::endl;
 */
 
+	Game g = Game();
+	g.init(renderer);
+	
+
 	bool quit = false;
 	while (!quit)
 	{
 		SDL_Event event;
 		while (!quit && SDL_PollEvent(&event))
 		{
-			switch (event.type)
+			switch(event.type)
 			{
-			case SDL_QUIT:
-				quit = true;
-				break;
+				case SDL_KEYDOWN:
+					switch( event.key.keysym.sym ){
+						case SDLK_LEFT:
+							std::cout << "Key Left !" << std::endl;
+							break;
+						case SDLK_RIGHT:
+							std::cout << "Key Right !" << std::endl;
+							break;
+						case SDLK_UP:
+							std::cout << "Key Up !" << std::endl;
+							g._ship.speedUp();
+							break;
+						case SDLK_DOWN:
+							std::cout << "Key Down !" << std::endl;
+							break;
+						default:
+							break;
+					}
+					break;
+				case SDL_QUIT:
+					quit = true;
+					break;
 			}
 		}
+
+		g._ship.move();
+
+		SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
+		SDL_RenderClear(renderer);
+
+		SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
+
+		g._ship.draw(renderer);
+
+
+    	SDL_RenderPresent(renderer);
+
 
 		draw(renderer);
 		SDL_RenderPresent(renderer);
