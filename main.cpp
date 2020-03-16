@@ -66,6 +66,7 @@ int main(int argc, char** argv)
 							break;
 						case SDLK_DOWN:
 							std::cout << "Key Down !" << std::endl;
+							g._ship.slowDown();
 							break;
 						default:
 							break;
