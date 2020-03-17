@@ -2,6 +2,7 @@
 #define __VEC2_H__
 
 #include <string>
+#include <math.h>
 
 template <class T>
 class Vec2
@@ -37,6 +38,11 @@ class Vec2
         friend std::ostream& operator<<(std::ostream& os, const Vec2& v) {
             os << "[" << v._x << ", " << v._y << "]";
             return os;
+        }
+
+        static Vec2 normalize(const Vec2& v) {
+            double m = sqrt(pow(v._x,2) + pow(v._y,2));
+            return Vec2(v._x/m, v._y/m);
         }
 
 };
