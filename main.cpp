@@ -44,10 +44,10 @@ int main(int argc, char** argv)
 	Game g = Game();
 	g.init(renderer);
 
-	Vec2<double> v1(5,6);
+	Vec2d v1(5,6);
 	Vec2<double> v2(5,10);
 	Vec2<double> v3 = v1 + v2;
-	Vec2<double> v4 = Vec2<double>::normalize(v1);
+	Vec2<double> v4 = Vec2d::normalize(v1);
 
 	v1.set(15,30);
 
