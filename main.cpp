@@ -5,6 +5,7 @@
 #include "sources/point.cpp"
 #include "sources/ship.cpp"
 #include "sources/game.cpp"
+#include "headers/vec2.h"
 
 
 void draw(SDL_Renderer* renderer)
@@ -42,7 +43,12 @@ int main(int argc, char** argv)
 
 	Game g = Game();
 	g.init(renderer);
+
+	Vec2<int> v;
+
+	std::cout << "v = " << v << std::endl;
 	
+	// std::cout << "[" << v._x << ", " << v._y << "]" << std::endl;
 
 	bool quit = false;
 	while (!quit)

@@ -27,7 +27,7 @@ void Ship::slowDown() {
 }
 
 void Ship::move() {
-    std::cout << "[" << this->_shipHead.getX() << ", " << this->_shipHead.getY() << "]" << std::endl;
+    // std::cout << "[" << this->_shipHead.getX() << ", " << this->_shipHead.getY() << "]" << std::endl;
     double x = x;//this->_shipHead.getX() * this->_speed;
     double y = this->direction * this->_speed;
     this->_shipHead = this->_shipHead.translation(x, y);
