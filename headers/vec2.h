@@ -25,6 +25,15 @@ class Vec2
             return !(v1 == v2);
         }
 
+        int& operator[](int i) {
+            assert(i<2);
+            if(i == 0) {
+                return _x;
+            } else {
+                return _y;
+            }
+        }
+
         friend std::ostream& operator<<(std::ostream& os, const Vec2& v) {
             os << "[" << v._x << ", " << v._y << "]";
             return os;
