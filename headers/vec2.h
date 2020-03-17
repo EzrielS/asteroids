@@ -14,6 +14,11 @@ class Vec2
         Vec2(T x, T y) : _x(x), _y(y) { };
         Vec2(const Vec2& v) : _x(v.x), _y(v.y) { };
 
+        void set(T x, T y) {
+            this->_x = x;
+            this->_y = y;
+        }
+
         Vec2 operator+(Vec2& v) {
             return Vec2(_x + v._x, _y + v._y);
         }
@@ -31,6 +36,40 @@ class Vec2
         Vec2& operator-=(Vec2& v) {
             _x -= v._x;
             _y -= v._y;
+            return *this;
+        }
+
+        Vec2 operator+(double s) {
+            return Vec2(_x + s, _y + s);
+        }
+        Vec2 operator-(double s) {
+            return Vec2(_x - s, _y - s);
+        }
+        Vec2 operator*(double s) {
+            return Vec2(_x * s, _y * s);
+        }
+        Vec2 operator/(double s) {
+            return Vec2(_x / s, _y / s);
+        }
+
+        Vec2& operator+=(double s) {
+            _x += s;
+            _y += s;
+            return *this;
+        }
+        Vec2& operator-=(double s) {
+            _x -= s;
+            _y -= s;
+            return *this;
+        }
+        Vec2& operator*=(double s) {
+            _x *= s;
+            _y *= s;
+            return *this;
+        }
+        Vec2& operator/=(double s) {
+            _x /= s;
+            _y /= s;
             return *this;
         }
 

@@ -49,7 +49,7 @@ int main(int argc, char** argv)
 	Vec2<double> v3 = v1 + v2;
 	Vec2<double> v4 = Vec2<double>::normalize(v1);
 
-	v1 -= v2;
+	v1.set(15,30);
 
 	std::cout << "v1 = " << v1 << std::endl;
 	std::cout << "v2 = " << v2 << std::endl;
