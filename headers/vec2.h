@@ -22,6 +22,18 @@ class Vec2
             return Vec2(_x - v._x, _y - v._y);
         }
 
+        Vec2& operator+=(Vec2& v) {
+            _x += v._x;
+            _y += v._y;
+            return *this;
+        }
+
+        Vec2& operator-=(Vec2& v) {
+            _x -= v._x;
+            _y -= v._y;
+            return *this;
+        }
+
         friend bool operator==(const Vec2& v1, const Vec2& v2) {
             return (v1._x == v2._x && v1._y == v2._y);
         }
