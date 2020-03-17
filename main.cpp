@@ -44,9 +44,13 @@ int main(int argc, char** argv)
 	Game g = Game();
 	g.init(renderer);
 
-	Vec2<int> v;
+	Vec2<int> v1(5,6);
+	Vec2<int> v2(10,10);
+	Vec2<int> v3 = v1 + v2;
 
-	std::cout << "v = " << v << std::endl;
+	std::cout << "v1 = " << v1 << std::endl;
+	std::cout << "v2 = " << v2 << std::endl;
+	std::cout << "v3 = " << v3 << std::endl;
 	
 	// std::cout << "[" << v._x << ", " << v._y << "]" << std::endl;
 

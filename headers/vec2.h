@@ -13,6 +13,10 @@ class Vec2
         Vec2(T x, T y) : _x(x), _y(y) { };
         Vec2(const Vec2& v) : _x(v.x), _y(v.y) { };
 
+        Vec2 operator+(Vec2& v) {
+            return Vec2(_x + v._x, _y + v._y);
+        }
+
         friend std::ostream& operator<<(std::ostream& os, Vec2 const& v) {
             os << "[" << v._x << ", " << v._y << "]";
             return os;
