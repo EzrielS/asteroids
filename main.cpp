@@ -44,6 +44,7 @@ int main(int argc, char** argv)
 	Game g = Game();
 	g.init(renderer);
 
+	Point p1 = Point(10,10);
 	Vec2d v1(5,6);
 	Vec2<double> v2(5,10);
 	Vec2<double> v3 = v1 + v2;
@@ -58,6 +59,8 @@ int main(int argc, char** argv)
 
 	std::cout << "v1 == v2 = " << (v1==v2) << std::endl;
 
+	std::cout << "P1 = " << p1 << std::endl;
+	std::cout << "P1 + v3 = " << (p1+v3) << std::endl;
 
 	
 	// std::cout << "[" << v._x << ", " << v._y << "]" << std::endl;
