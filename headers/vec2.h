@@ -80,7 +80,7 @@ class Vec2
             return !(v1 == v2);
         }
 
-        int& operator[](int i) {
+        T& operator[](int i) {
             assert(i<2);
             if(i == 0) {
                 return _x;
