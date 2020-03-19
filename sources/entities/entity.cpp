@@ -34,6 +34,7 @@ void Entity::update(){
 
 void Entity::draw(){
 	SDL_Rect tmpRect = this->getRect();
+/*
 	SDL_Rect position;
 	position.y = this->coords.getX();
 	position.x = this->coords.getY();
@@ -46,10 +47,24 @@ SDL_RenderCopyEx(this->renderer,
                     this->angle,
                     NULL,			// center
                     SDL_FLIP_NONE);
+*/
+	SDL_RenderCopyEx(this->renderer,
+                    this->image,
+                    NULL,
+                    &tmpRect,
+                    this->angle,
+                    NULL,			// center
+                    SDL_FLIP_NONE);
 }
 
 SDL_Rect Entity::getRect(){
-	SDL_Rect tmpRect {(int)(this->coords.getX() - this->width/2), (int)(this->coords.getY() - this->height/2),
-						(int)(this->coords.getX() + this->width/2), (int)(this->coords.getY() + this->height/2)  };
+	SDL_Rect tmpRect;
+	tmpRect.x = this->coords.getY();
+	tmpRect.y = this->coords.getX();
+
+//	 {(int)(this->coords.getX() - this->width/2), (int)(this->coords.getY() - this->height/2),
+//						(int)(this->coords.getX() + this->width/2), (int)(this->coords.getY() + this->height/2)  };
+	SDL_QueryTexture(this->image, NULL, NULL, &tmpRect.w, &tmpRect.h);
+
 	return tmpRect;
 }
