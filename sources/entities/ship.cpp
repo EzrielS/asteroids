@@ -13,30 +13,20 @@ void Ship::draw(SDL_Renderer* renderer) {
 }
 
 void Ship::speedUp() {
-    std::cout << "speedUp" << std::endl;
+    std::cout << "SpeedUp" << std::endl;
     this->_speed += 1;
 }
 
 void Ship::slowDown() {
-    std::cout << "slowDown" << std::endl;
-    if(this->_speed > 0.) {
-        this->_speed -= 0.5;
-    } else {
-        this->_speed = 0.;
-    }
+
 }
 
 void Ship::move() {
-    // std::cout << "[" << this->_shipHead.getX() << ", " << this->_shipHead.getY() << "]" << std::endl;
+    std::cout << "[" << this->_shipHead.getX() << ", " << this->_shipHead.getY() << "]" << std::endl;
     double x = x;//this->_shipHead.getX() * this->_speed;
     double y = this->direction * this->_speed;
     this->_shipHead = this->_shipHead.translation(x, y);
-
     if(this->_shipHead.getY() < 0) {
         this->_shipHead.setY(this->_shipHead.getY() + 600);
-    }
-
-    if(this->_shipHead.getY() > 600) {
-        this->_shipHead.setY(this->_shipHead.getY() -600);
     }
 }

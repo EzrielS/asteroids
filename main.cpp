@@ -1,10 +1,16 @@
 #include <SDL.h>
 #include <iostream>
 #include <cassert>
+#include <chrono>
+#include <thread>
 
 #include "sources/point.cpp"
 #include "sources/ship.cpp"
 #include "sources/game.cpp"
+#include "headers/vec2.h"
+#include "sources/entities/entity.cpp"
+
+#include <math.h>  
 
 
 void draw(SDL_Renderer* renderer)
@@ -42,30 +48,57 @@ int main(int argc, char** argv)
 
 	Game g = Game();
 	g.init(renderer);
+
+	Vec2d v1(5,6);
+	Vec2<double> v2(5,10);
+	Vec2<double> v3 = v1 + v2;
+	Vec2<double> v4 = Vec2d::normalize(v1);
+
+	v1.set(15,30);
+
+	std::cout << "v1 = " << v1 << std::endl;
+	std::cout << "v2 = " << v2 << std::endl;
+	std::cout << "v3 = " << v3 << std::endl;
+	std::cout << "v4 = " << v4 << std::endl;
+
+	std::cout << "v1 == v2 = " << (v1==v2) << std::endl;
+
+
 	
+	// std::cout << "[" << v._x << ", " << v._y << "]" << std::endl;
+
+Entity e  = Entity(500, 500, 200, 200, "images/vaisseau.bmp", renderer);
 
 	bool quit = false;
+
 	while (!quit)
 	{
+		SDL_RenderClear(renderer);
 		SDL_Event event;
 		while (!quit && SDL_PollEvent(&event))
 		{
+
+
 			switch(event.type)
 			{
 				case SDL_KEYDOWN:
 					switch( event.key.keysym.sym ){
 						case SDLK_LEFT:
 							std::cout << "Key Left !" << std::endl;
+e.angle = e.angle-90/3;
 							break;
 						case SDLK_RIGHT:
 							std::cout << "Key Right !" << std::endl;
+e.angle = e.angle+90/3;
 							break;
 						case SDLK_UP:
 							std::cout << "Key Up !" << std::endl;
-							g._ship.speedUp();
+e.vitesse =  Vec2d(sin(e.angle*(2*M_PI/360)), cos(e.angle*(2*M_PI/360))) + e.vitesse ;
+//							g._ship.speedUp();
 							break;
 						case SDLK_DOWN:
 							std::cout << "Key Down !" << std::endl;
+							g._ship.slowDown();
 							break;
 						default:
 							break;
@@ -78,11 +111,15 @@ int main(int argc, char** argv)
 		}
 
 		g._ship.move();
-
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
 		SDL_RenderClear(renderer);
 
 		SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
+e.update();
+e.draw();
+std::cout << "speed is : " << e.vitesse << "with angle " << e.angle << std::endl ;
+
+
 
 		g._ship.draw(renderer);
 
@@ -92,6 +129,8 @@ int main(int argc, char** argv)
 
 		draw(renderer);
 		SDL_RenderPresent(renderer);
+		std::this_thread::sleep_for(std::chrono::milliseconds(25));
+
 	}
 	SDL_Quit();
 
