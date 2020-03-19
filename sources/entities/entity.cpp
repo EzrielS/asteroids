@@ -40,7 +40,7 @@ SDL_RenderCopyEx(this->renderer,
 }
 
 SDL_Rect Entity::getRect(){
-	SDL_Rect tmpRect {this->coords.getX() - this->width/2, this->coords.getY() - this->height/2,
-						this->coords.getX() + this->width/2, this->coords.getY() + this->height/2  };
+	SDL_Rect tmpRect {(int)(this->coords.getX() - this->width/2), (int)(this->coords.getY() - this->height/2),
+						(int)(this->coords.getX() + this->width/2), (int)(this->coords.getY() + this->height/2)  };
 	return tmpRect;
 }
