@@ -16,9 +16,19 @@ Entity::Entity(double x, double y, double width, double height, const char* imag
 }
 
 void Entity::update(){
-	this->coords = this->coords + this->vitesse; 
-//	this->coords.setX(this->coords.getX() + this->vitesse._x);
-//	this->coords.setY(this->coords.getY() + this->vitesse._y);
+	this->coords = this->coords + this->vitesse;
+	if(this->coords.getY() > 1030){
+		this->coords.setY(-29);
+	}
+	if(this->coords.getY() < -30){
+		this->coords.setY(1029);
+	}
+	if(this->coords.getX() > 630){
+		this->coords.setX(-29);
+	}
+	if(this->coords.getX() < -30){
+		this->coords.setX(629);
+	}
 }
 
 
@@ -27,7 +37,6 @@ void Entity::draw(){
 	SDL_Rect position;
 	position.y = this->coords.getX();
 	position.x = this->coords.getY();
-std::cout << "when draw coords are " << this->coords.getX() << "-" << this->coords.getY() << std::endl;
 	SDL_QueryTexture(this->image, NULL, NULL, &position.w, &position.h);
 
 SDL_RenderCopyEx(this->renderer,

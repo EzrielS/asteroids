@@ -68,7 +68,7 @@ int main(int argc, char** argv)
 	
 	// std::cout << "[" << v._x << ", " << v._y << "]" << std::endl;
 
-Entity e  = Entity(500, 500, 200, 200, "images/vaisseau.bmp", renderer);
+Entity e  = Entity(300, 500, 200, 200, "images/vaisseau.bmp", renderer);
 	std::cout << "P1 = " << p1 << std::endl;
 	std::cout << "P1 + v3 = " << (p1+v3) << std::endl;
 
@@ -91,11 +91,11 @@ Entity e  = Entity(500, 500, 200, 200, "images/vaisseau.bmp", renderer);
 					switch( event.key.keysym.sym ){
 						case SDLK_LEFT:
 							std::cout << "Key Left !" << std::endl;
-e.angle = e.angle-90/3;
+e.angle = e.angle-90/5;
 							break;
 						case SDLK_RIGHT:
 							std::cout << "Key Right !" << std::endl;
-e.angle = e.angle+90/3;
+e.angle = e.angle+90/5;
 							break;
 						case SDLK_UP:
 							std::cout << "Key Up !" << std::endl;
