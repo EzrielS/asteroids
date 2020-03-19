@@ -18,6 +18,10 @@ endfunction()
 
 
 
+
+
+FILE(COPY images DESTINATION "${CMAKE_BINARY_DIR}")
+
 # ajouter les sources ici
 
 set(SRC_FILES_ASTEROID
