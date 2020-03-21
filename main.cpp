@@ -70,6 +70,8 @@ int main(int argc, char** argv)
 	// std::cout << "[" << v._x << ", " << v._y << "]" << std::endl;
 
 Entity e  = Entity(300, 500, 200, 200, "images/vaisseau.bmp", renderer);
+g.entities.push_front(&e);
+
 	std::cout << "P1 = " << p1 << std::endl;
 	std::cout << "P1 + v3 = " << (p1+v3) << std::endl;
 
@@ -120,11 +122,12 @@ e.vitesse =  Vec2d(sin(e.angle*(2*M_PI/360)), cos(e.angle*(2*M_PI/360))) + e.vit
 		g._ship.move();
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
 		SDL_RenderClear(renderer);
-
 		SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
-e.update();
-e.draw();
-std::cout << "speed is : " << e.vitesse << "with angle " << e.angle << std::endl ;
+		g.update();
+		g.draw();
+//e.update();
+//e.draw();
+//std::cout << "speed is : " << e.vitesse << "with angle " << e.angle << " @ " << e.coords << std::endl ;
 
 
 

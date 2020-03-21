@@ -16,6 +16,7 @@ Entity::Entity(double x, double y, double width, double height, const char* imag
 }
 
 void Entity::update(){
+	std::cout << "[UNITE UPDATED] w vitesse " << this->vitesse << " @ " << this->coords  << std::endl;
 	this->coords = this->coords + this->vitesse;
 	if(this->coords.getY() > 1030){
 		this->coords.setY(-29);
@@ -29,25 +30,13 @@ void Entity::update(){
 	if(this->coords.getX() < -30){
 		this->coords.setX(629);
 	}
+	this->vitesse *= 0.999;
 }
 
 
 void Entity::draw(){
+	std::cout << "[UNITE DRAWN]" << std::endl;
 	SDL_Rect tmpRect = this->getRect();
-/*
-	SDL_Rect position;
-	position.y = this->coords.getX();
-	position.x = this->coords.getY();
-	SDL_QueryTexture(this->image, NULL, NULL, &position.w, &position.h);
-
-SDL_RenderCopyEx(this->renderer,
-                    this->image,
-                    NULL,
-                    &position,
-                    this->angle,
-                    NULL,			// center
-                    SDL_FLIP_NONE);
-*/
 	SDL_RenderCopyEx(this->renderer,
                     this->image,
                     NULL,
@@ -61,9 +50,6 @@ SDL_Rect Entity::getRect(){
 	SDL_Rect tmpRect;
 	tmpRect.x = this->coords.getY();
 	tmpRect.y = this->coords.getX();
-
-//	 {(int)(this->coords.getX() - this->width/2), (int)(this->coords.getY() - this->height/2),
-//						(int)(this->coords.getX() + this->width/2), (int)(this->coords.getY() + this->height/2)  };
 	SDL_QueryTexture(this->image, NULL, NULL, &tmpRect.w, &tmpRect.h);
 
 	return tmpRect;
