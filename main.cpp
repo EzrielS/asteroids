@@ -46,7 +46,8 @@ int main(int argc, char** argv)
 	std::cout << "Point : " << titi.getX() << " : " << titi.getY() << std::endl;
 */
 
-	Game g = Game();
+	Game& g = Game::getInstance();
+
 	g.init(renderer);
 
 	Point p1 = Point(10,10);
