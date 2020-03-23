@@ -4,25 +4,29 @@
 class Entity
 {
     private:
-        double _x;
-        double _y;
-        double width;
-        double height;
+        SDL_Texture* image;
+        SDL_Surface* imageAsSurf;
         SDL_Rect hitBox;
 
         Point coords;
 
         SDL_Renderer* renderer;
-
-    public:
-        SDL_Texture* image;
-        SDL_Surface* imageAsSurf;
         double angle;
         Vec2d vitesse;
 
-    	
-        Entity(double x, double y, double width, double height, const char*  imageFile, SDL_Renderer* renderer);
 
+    public:
+
+    	
+        Entity(double x, double y,  const char*  imageFile, SDL_Renderer* renderer);
+
+        double getAngle();
+        Vec2d getVitesse();
+
+        void setVitesse(Vec2d vit);
+        void addVitesse(Vec2d vit);
+        void pivot(double angle);
+        
         void update();
         void draw();
         SDL_Rect getRect();

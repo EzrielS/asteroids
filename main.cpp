@@ -39,15 +39,7 @@ int main(int argc, char** argv)
 	SDL_Renderer* renderer = SDL_CreateRenderer(window, -1,SDL_RENDERER_ACCELERATED|SDL_RENDERER_PRESENTVSYNC);
 	assert (renderer != nullptr);
 
-/*
-	Point toto = Point(10., 20.);
-	std::cout << "Point : " << toto.getX() << " : " << toto.getY() << std::endl;
-	Point titi = toto.translation(2., 3.);
-	std::cout << "Point : " << titi.getX() << " : " << titi.getY() << std::endl;
-*/
-
 	Game& g = Game::getInstance();
-
 	g.init(renderer);
 
 	Point p1 = Point(10,10);
@@ -69,7 +61,7 @@ int main(int argc, char** argv)
 	
 	// std::cout << "[" << v._x << ", " << v._y << "]" << std::endl;
 
-Entity e  = Entity(300, 500, 200, 200, "images/vaisseau.bmp", renderer);
+Entity e  = Entity(300, 500, "images/vaisseau.bmp", renderer);
 g.entities.push_front(&e);
 
 	std::cout << "P1 = " << p1 << std::endl;
@@ -94,15 +86,16 @@ g.entities.push_front(&e);
 					switch( event.key.keysym.sym ){
 						case SDLK_LEFT:
 							std::cout << "Key Left !" << std::endl;
-e.angle = e.angle-90/5;
+e.pivot(-90/5);
 							break;
 						case SDLK_RIGHT:
 							std::cout << "Key Right !" << std::endl;
-e.angle = e.angle+90/5;
+e.pivot(90/5);
 							break;
 						case SDLK_UP:
 							std::cout << "Key Up !" << std::endl;
-e.vitesse =  Vec2d(sin(e.angle*(2*M_PI/360)), cos(e.angle*(2*M_PI/360))) + e.vitesse ;
+e.addVitesse(angleToVec(e.getAngle()));
+//e.vitesse =  Vec2d(sin(e.angle*(2*M_PI/360)), cos(e.angle*(2*M_PI/360))) + e.vitesse ;
 //							g._ship.speedUp();
 							break;
 						case SDLK_DOWN:

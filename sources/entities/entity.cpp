@@ -1,7 +1,7 @@
 #include "./entity.h"
 #include "../../headers/vec2.h"
 
-Entity::Entity(double x, double y, double width, double height, const char* imageFile, SDL_Renderer* renderer){
+Entity::Entity(double x, double y, const char* imageFile, SDL_Renderer* renderer){
 	this->renderer = renderer;
 	this->imageAsSurf = SDL_LoadBMP(imageFile);
 	
@@ -30,12 +30,11 @@ void Entity::update(){
 	if(this->coords.getX() < -30){
 		this->coords.setX(629);
 	}
-	this->vitesse *= 0.999;
+//	this->vitesse *= 0.999;
 }
 
 
 void Entity::draw(){
-	std::cout << "[UNITE DRAWN]" << std::endl;
 	SDL_Rect tmpRect = this->getRect();
 	SDL_RenderCopyEx(this->renderer,
                     this->image,
@@ -46,11 +45,31 @@ void Entity::draw(){
                     SDL_FLIP_NONE);
 }
 
+double Entity::getAngle(){
+	return this->angle;
+}
+
+void Entity::pivot(double angle){
+	this->angle += angle;
+}
+
+Vec2d Entity::getVitesse(){
+	return this->vitesse;
+}
+
+void Entity::setVitesse(Vec2d vit){
+	this->vitesse = vit;
+}
+
+void Entity::addVitesse(Vec2d vit){
+	this->vitesse = this->vitesse + vit;
+}
+
 SDL_Rect Entity::getRect(){
 	SDL_Rect tmpRect;
 	tmpRect.x = this->coords.getY();
 	tmpRect.y = this->coords.getX();
 	SDL_QueryTexture(this->image, NULL, NULL, &tmpRect.w, &tmpRect.h);
-
 	return tmpRect;
 }
+
