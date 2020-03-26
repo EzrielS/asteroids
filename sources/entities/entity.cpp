@@ -1,23 +1,19 @@
 #include "./entity.h"
 #include "../../headers/vec2.h"
 
-Entity::Entity(double x, double y, const char* imageFile, SDL_Renderer* renderer){
-	this->renderer = renderer;
-	this->imageAsSurf = SDL_LoadBMP(imageFile);
-	
-	if(!this->imageAsSurf){
-	    std::cerr << "Erreur de chargement de l'image : " << SDL_GetError() << std::endl;
-	    exit (-1);
-	}
-	this->image = SDL_CreateTextureFromSurface(renderer,this->imageAsSurf);
+Entity::Entity(double x, double y, SDL_Surface* imageAsSurf, SDL_Renderer* renderer){
+	this->renderer = renderer;	
+	this->image = SDL_CreateTextureFromSurface(renderer,imageAsSurf);
 	this->coords = Point(x, y);
 	this->angle=0.;
 	this->vitesse=Vec2d(0, 0);
+	this->inertie = 1;
 }
 
 void Entity::update(){
 	std::cout << "[UNITE UPDATED] w vitesse " << this->vitesse << " @ " << this->coords  << std::endl;
 	this->coords = this->coords + this->vitesse;
+	this->vitesse = this->vitesse * this->inertie;
 	if(this->coords.getY() > 1030){
 		this->coords.setY(-29);
 	}
@@ -30,7 +26,6 @@ void Entity::update(){
 	if(this->coords.getX() < -30){
 		this->coords.setX(629);
 	}
-//	this->vitesse *= 0.999;
 }
 
 
@@ -60,6 +55,11 @@ Vec2d Entity::getVitesse(){
 void Entity::setVitesse(Vec2d vit){
 	this->vitesse = vit;
 }
+
+void Entity::setInertie(double inertie){
+	this->inertie = inertie;
+}
+
 
 void Entity::addVitesse(Vec2d vit){
 	this->vitesse = this->vitesse + vit;

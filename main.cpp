@@ -27,6 +27,15 @@ void draw(SDL_Renderer* renderer)
 }
 
 
+SDL_Surface* getImageAsSurface(const char * file){
+	SDL_Surface* ret = SDL_LoadBMP(file);
+	if(!ret){
+	    std::cerr << "Erreur de chargement de l'image : " << SDL_GetError() << std::endl;
+	    exit (-1);
+	}
+	return ret;
+} 
+
 
 int main(int argc, char** argv)
 {
@@ -61,7 +70,8 @@ int main(int argc, char** argv)
 	
 	// std::cout << "[" << v._x << ", " << v._y << "]" << std::endl;
 
-Entity e  = Entity(300, 500, "images/vaisseau.bmp", renderer);
+Entity e  = Ship(300, 500, getImageAsSurface("images/vaisseau.bmp"), renderer, 10);
+e.setInertie(0.999);
 g.entities.push_front(&e);
 
 	std::cout << "P1 = " << p1 << std::endl;
@@ -100,7 +110,7 @@ e.addVitesse(angleToVec(e.getAngle()));
 							break;
 						case SDLK_DOWN:
 							std::cout << "Key Down !" << std::endl;
-							g._ship.slowDown();
+//							g._ship.slowDown();
 							break;
 						default:
 							break;
@@ -112,7 +122,7 @@ e.addVitesse(angleToVec(e.getAngle()));
 			}
 		}
 
-		g._ship.move();
+//		g._ship.move();
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
 		SDL_RenderClear(renderer);
 		SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
@@ -124,7 +134,7 @@ e.addVitesse(angleToVec(e.getAngle()));
 
 
 
-		g._ship.draw(renderer);
+//		g._ship.draw(renderer);
 
 
     	SDL_RenderPresent(renderer);

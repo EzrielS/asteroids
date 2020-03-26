@@ -14,7 +14,7 @@ Game& Game::getInstance() {
 
 void Game::init(SDL_Renderer* renderer) {
 	_renderer=renderer;
-    _ship = Ship();
+//    _ship = Ship();
 }
 
 void Game::update(){

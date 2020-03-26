@@ -15,7 +15,7 @@ class Game
         static Game _instance;
 
     public:
-        Ship _ship;
+//        Ship _ship;
 
         Game(Game const&) = delete;
         Game& operator=(Game const&) = delete;
