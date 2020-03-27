@@ -65,6 +65,10 @@ void Entity::addVitesse(Vec2d vit){
 	this->vitesse = this->vitesse + vit;
 }
 
+Point Entity::getCoords(){
+	return this->coords;
+}
+
 SDL_Rect Entity::getRect(){
 	SDL_Rect tmpRect;
 	tmpRect.x = this->coords.getY();
@@ -73,3 +77,6 @@ SDL_Rect Entity::getRect(){
 	return tmpRect;
 }
 
+SDL_Renderer* Entity::getRenderer(){
+	return this->renderer;
+}

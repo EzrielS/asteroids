@@ -6,6 +6,7 @@
 
 #include "sources/point.cpp"
 #include "sources/ship.cpp"
+#include "sources/weapon.cpp"
 #include "sources/game.cpp"
 #include "headers/vec2.h"
 #include "sources/entities/entity.cpp"
@@ -70,9 +71,13 @@ int main(int argc, char** argv)
 	
 	// std::cout << "[" << v._x << ", " << v._y << "]" << std::endl;
 
-Entity e  = Ship(300, 500, getImageAsSurface("images/vaisseau.bmp"), renderer, 10);
+Ship e  = Ship(300, 500, getImageAsSurface("images/vaisseau.bmp"), renderer, 10);
 e.setInertie(0.999);
 g.entities.push_front(&e);
+
+
+Weapon w1 = Weapon(getImageAsSurface("images/tir1.bmp"), 1, 10, 100);
+w1.bind(&e);
 
 	std::cout << "P1 = " << p1 << std::endl;
 	std::cout << "P1 + v3 = " << (p1+v3) << std::endl;
@@ -111,6 +116,10 @@ e.addVitesse(angleToVec(e.getAngle()));
 						case SDLK_DOWN:
 							std::cout << "Key Down !" << std::endl;
 //							g._ship.slowDown();
+							break;
+						case SDLK_SPACE	:
+							std::cout << "FIRE !" << std::endl;
+							w1.fire();
 							break;
 						default:
 							break;

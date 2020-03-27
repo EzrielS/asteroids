@@ -46,3 +46,23 @@ void Ship::move() {
 }
 
 */
+
+
+void Ship::update(){
+	Entity::update();
+
+	for (std::list<Bullet*>::iterator it=this->bullets.begin(); it != this->bullets.end(); ++it){
+		std::cout << "Avant update d'une bullet ..." << std::endl;
+ 		(*it)->update();
+		std::cout << "Après " << std::endl;
+
+ 	}
+}
+
+
+void Ship::draw(){
+	Entity::draw();
+	for (std::list<Bullet*>::iterator it=this->bullets.begin(); it != this->bullets.end(); ++it){
+ 		(*it)->draw();
+ 	}
+}

@@ -28,10 +28,14 @@ class Entity
         void addVitesse(Vec2d vit);
         void pivot(double angle);
         
+        SDL_Renderer* getRenderer();
+
         void setInertie(double inertie);
-        void update();
-        void draw();
+        virtual void update();
+        virtual void draw();
         SDL_Rect getRect();
+
+        Point getCoords();
 
 
 };
