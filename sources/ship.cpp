@@ -1,7 +1,8 @@
 #include "../headers/ship.h"
 
-Ship::Ship() : _speed(0.), _shipHead(500., 300.), direction(-1) { }
+// Ship::Ship() : _speed(0.), _shipHead(500., 300.), direction(-1) { }
 
+/*
 void Ship::draw(SDL_Renderer* renderer) {
     Point p1 = _shipHead;
     Point p2 = Point(_shipHead.getX() - 10, _shipHead.getY() + 25);
@@ -11,12 +12,14 @@ void Ship::draw(SDL_Renderer* renderer) {
     SDL_RenderDrawLine(renderer, p1.getX(), p1.getY(), p3.getX(), p3.getY());
     SDL_RenderDrawLine(renderer, p2.getX(), p2.getY(), p3.getX(), p3.getY());
 }
-
+*/
 void Ship::speedUp() {
-    std::cout << "speedUp" << std::endl;
-    this->_speed += 1;
+	this->addVitesse(angleToVec(this->getAngle()));		// todo : acceleration
+//    std::cout << "speedUp" << std::endl;
+//    this->_speed += 1;
 }
 
+/*
 void Ship::slowDown() {
     std::cout << "slowDown" << std::endl;
     if(this->_speed > 0.) {
@@ -39,4 +42,27 @@ void Ship::move() {
     if(this->_shipHead.getY() > 600) {
         this->_shipHead.setY(this->_shipHead.getY() -600);
     }
+
+}
+
+*/
+
+
+void Ship::update(){
+	Entity::update();
+
+	for (std::list<Bullet*>::iterator it=this->bullets.begin(); it != this->bullets.end(); ++it){
+		std::cout << "Avant update d'une bullet ..." << std::endl;
+ 		(*it)->update();
+		std::cout << "Après " << std::endl;
+
+ 	}
+}
+
+
+void Ship::draw(){
+	Entity::draw();
+	for (std::list<Bullet*>::iterator it=this->bullets.begin(); it != this->bullets.end(); ++it){
+ 		(*it)->draw();
+ 	}
 }

@@ -6,6 +6,7 @@
 
 #include "sources/point.cpp"
 #include "sources/ship.cpp"
+#include "sources/weapon.cpp"
 #include "sources/game.cpp"
 #include "headers/vec2.h"
 #include "sources/entities/entity.cpp"
@@ -27,6 +28,15 @@ void draw(SDL_Renderer* renderer)
 }
 
 
+SDL_Surface* getImageAsSurface(const char * file){
+	SDL_Surface* ret = SDL_LoadBMP(file);
+	if(!ret){
+	    std::cerr << "Erreur de chargement de l'image : " << SDL_GetError() << std::endl;
+	    exit (-1);
+	}
+	return ret;
+} 
+
 
 int main(int argc, char** argv)
 {
@@ -39,15 +49,7 @@ int main(int argc, char** argv)
 	SDL_Renderer* renderer = SDL_CreateRenderer(window, -1,SDL_RENDERER_ACCELERATED|SDL_RENDERER_PRESENTVSYNC);
 	assert (renderer != nullptr);
 
-/*
-	Point toto = Point(10., 20.);
-	std::cout << "Point : " << toto.getX() << " : " << toto.getY() << std::endl;
-	Point titi = toto.translation(2., 3.);
-	std::cout << "Point : " << titi.getX() << " : " << titi.getY() << std::endl;
-*/
-
 	Game& g = Game::getInstance();
-
 	g.init(renderer);
 
 	Point p1 = Point(10,10);
@@ -69,7 +71,14 @@ int main(int argc, char** argv)
 	
 	// std::cout << "[" << v._x << ", " << v._y << "]" << std::endl;
 
-Entity e  = Entity(300, 500, 200, 200, "images/vaisseau.bmp", renderer);
+Ship e  = Ship(300, 500, getImageAsSurface("images/vaisseau.bmp"), renderer, 10);
+e.setInertie(0.999);
+g.entities.push_front(&e);
+
+
+Weapon w1 = Weapon(getImageAsSurface("images/tir1.bmp"), 1, 10, 100);
+w1.bind(&e);
+
 	std::cout << "P1 = " << p1 << std::endl;
 	std::cout << "P1 + v3 = " << (p1+v3) << std::endl;
 
@@ -92,20 +101,25 @@ Entity e  = Entity(300, 500, 200, 200, "images/vaisseau.bmp", renderer);
 					switch( event.key.keysym.sym ){
 						case SDLK_LEFT:
 							std::cout << "Key Left !" << std::endl;
-e.angle = e.angle-90/5;
+e.pivot(-90/5);
 							break;
 						case SDLK_RIGHT:
 							std::cout << "Key Right !" << std::endl;
-e.angle = e.angle+90/5;
+e.pivot(90/5);
 							break;
 						case SDLK_UP:
 							std::cout << "Key Up !" << std::endl;
-e.vitesse =  Vec2d(sin(e.angle*(2*M_PI/360)), cos(e.angle*(2*M_PI/360))) + e.vitesse ;
+e.addVitesse(angleToVec(e.getAngle()));
+//e.vitesse =  Vec2d(sin(e.angle*(2*M_PI/360)), cos(e.angle*(2*M_PI/360))) + e.vitesse ;
 //							g._ship.speedUp();
 							break;
 						case SDLK_DOWN:
 							std::cout << "Key Down !" << std::endl;
-							g._ship.slowDown();
+//							g._ship.slowDown();
+							break;
+						case SDLK_SPACE	:
+							std::cout << "FIRE !" << std::endl;
+							w1.fire();
 							break;
 						default:
 							break;
@@ -117,18 +131,19 @@ e.vitesse =  Vec2d(sin(e.angle*(2*M_PI/360)), cos(e.angle*(2*M_PI/360))) + e.vit
 			}
 		}
 
-		g._ship.move();
+//		g._ship.move();
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
 		SDL_RenderClear(renderer);
-
 		SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
-e.update();
-e.draw();
-std::cout << "speed is : " << e.vitesse << "with angle " << e.angle << std::endl ;
+		g.update();
+		g.draw();
+//e.update();
+//e.draw();
+//std::cout << "speed is : " << e.vitesse << "with angle " << e.angle << " @ " << e.coords << std::endl ;
 
 
 
-		g._ship.draw(renderer);
+//		g._ship.draw(renderer);
 
 
     	SDL_RenderPresent(renderer);

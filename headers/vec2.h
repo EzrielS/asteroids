@@ -12,7 +12,8 @@ class Vec2
 	
         Vec2() : _x(0), _y(0) { };
         Vec2(T x, T y) : _x(x), _y(y) { };
-        Vec2(const Vec2& v) : _x(v.x), _y(v.y) { };
+//        Vec2(const Vec2& v) : _x(v.x), _y(v.y) { }; 	modifié par ligne ci-dessous. Pourquoi cela n'a pas buggé avant ?
+        Vec2(const Vec2& v) : _x(v._x), _y(v._y) { };
 
         void set(T x, T y) {
             this->_x = x;
@@ -104,5 +105,10 @@ class Vec2
 typedef Vec2<int> Vec2i;
 typedef Vec2<float> Vec2f;
 typedef Vec2<double> Vec2d;
+
+Vec2d angleToVec(double angle){
+	return Vec2d(sin(angle*(2*M_PI/360)), cos(angle*(2*M_PI/360)));
+}
+
 
 #endif
