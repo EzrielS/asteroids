@@ -2,7 +2,6 @@
 
 Game Game::_instance = Game();
 
-
 Game::Game() { }
 
 Game::~Game() { }
