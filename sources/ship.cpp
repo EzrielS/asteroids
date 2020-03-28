@@ -1,4 +1,8 @@
 #include "../headers/ship.h"
+#include <typeinfo>
+// #include "../sources/weapon.cpp"
+#include "../headers/weapon.h"
+
 
 // Ship::Ship() : _speed(0.), _shipHead(500., 300.), direction(-1) { }
 
@@ -50,12 +54,11 @@ void Ship::move() {
 
 void Ship::update(){
 	Entity::update();
-
 	for (std::list<Bullet*>::iterator it=this->bullets.begin(); it != this->bullets.end(); ++it){
-		std::cout << "Avant update d'une bullet ..." << std::endl;
  		(*it)->update();
-		std::cout << "Après " << std::endl;
-
+ 	}
+	for (std::list<Weapon*>::iterator it=this->weapons.begin(); it != this->weapons.end(); ++it){
+ 		(*it)->update();
  	}
 }
 
@@ -65,4 +68,8 @@ void Ship::draw(){
 	for (std::list<Bullet*>::iterator it=this->bullets.begin(); it != this->bullets.end(); ++it){
  		(*it)->draw();
  	}
+}
+
+void Ship::giveWeapon(Weapon* w){
+	this->weapons.push_front(w);
 }

@@ -33,6 +33,7 @@ class Entity
         void setInertie(double inertie);
         virtual void update();
         virtual void draw();
+//        Point getCenter();
         SDL_Rect getRect();
 
         Point getCoords();

@@ -11,7 +11,6 @@ Entity::Entity(double x, double y, SDL_Surface* imageAsSurf, SDL_Renderer* rende
 }
 
 void Entity::update(){
-	std::cout << "[UNITE UPDATED] w vitesse " << this->vitesse << " @ " << this->coords  << std::endl;
 	this->coords = this->coords + this->vitesse;
 	this->vitesse = this->vitesse * this->inertie;
 	if(this->coords.getY() > 1030){
@@ -74,6 +73,8 @@ SDL_Rect Entity::getRect(){
 	tmpRect.x = this->coords.getY();
 	tmpRect.y = this->coords.getX();
 	SDL_QueryTexture(this->image, NULL, NULL, &tmpRect.w, &tmpRect.h);
+	tmpRect.x -= tmpRect.w/2;
+	tmpRect.y -= tmpRect.h/2;
 	return tmpRect;
 }
 

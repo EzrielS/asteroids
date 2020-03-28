@@ -76,7 +76,11 @@ e.setInertie(0.999);
 g.entities.push_front(&e);
 
 
-Weapon w1 = Weapon(getImageAsSurface("images/tir1.bmp"), 1, 10, 100);
+Weapon w1 = Weapon(
+	getImageAsSurface("images/tir1.bmp"), 
+	1, 	// dmg
+	30, // vitesse
+	5);	// cooldown
 w1.bind(&e);
 
 	std::cout << "P1 = " << p1 << std::endl;

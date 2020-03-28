@@ -12,9 +12,12 @@ class Bullet  : public Entity
 
     public:
 
-    	Bullet(double x, double y, SDL_Surface* imageAsSurf, SDL_Renderer* renderer, int dmg):
-    		Entity(x, y,  imageAsSurf,  renderer),
-    		dmg(dmg) {std::cout << "creation d'une bullet \n";}
+    	Bullet(double x, double y, SDL_Surface* imageAsSurf, SDL_Renderer* renderer, int dmg): Entity(x, y,  imageAsSurf, renderer)
+    			{
+    				this->dmg = dmg;
+    			}
+
+//    	Bullet(double x, double y, SDL_Surface* imageAsSurf, SDL_Renderer* renderer, int dmg);
 
     	int getDmg();
 

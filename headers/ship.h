@@ -2,7 +2,9 @@
 #define __SHIP_H__
 
 #include "../sources/entities/entity.h"
-#include "bullet.h"
+#include "../sources/bullet.cpp"
+#include "weapon.h"
+
 #include <list>
 
 class Ship: public Entity {
@@ -10,6 +12,7 @@ class Ship: public Entity {
  //       Point _shipHead;
  //       int direction; // TODO Change to Vec2
         int nbVie;
+        std::list<Weapon*> weapons;
 
 
     public:
@@ -24,6 +27,7 @@ class Ship: public Entity {
 //        void draw(SDL_Renderer* renderer);
         void speedUp();
         void slowDown();
+        void giveWeapon(Weapon* w);
 
         std::list<Bullet*> bullets;
 //        void move();
