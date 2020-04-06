@@ -6,7 +6,3 @@
 int Bullet::getDamage(){
 	return this->_damage;
 }
-
-
-
-

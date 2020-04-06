@@ -8,6 +8,7 @@
 #include "sources/ship.cpp"
 #include "sources/weapon.cpp"
 #include "sources/game.cpp"
+#include "sources/asteroid.cpp"
 #include "headers/vec2.h"
 #include "sources/entities/entity.cpp"
 
@@ -62,6 +63,9 @@ Weapon w1 = Weapon(
 	5,	 // cooldown
 	50); // bullet health
 w1.bind(&e);
+
+Asteroid a1 = Asteroid(	400, 400, std::list<SDL_Surface*> { getImageAsSurface("images/asteroide1.bmp") }, renderer);
+g.entities.push_front(&a1);
 
 	bool quit = false;
 

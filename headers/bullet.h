@@ -18,8 +18,6 @@ class Bullet : public Entity
 					this->_health = health;
     			}
 
-//    	Bullet(double x, double y, SDL_Surface* imageAsSurf, SDL_Renderer* renderer, int damage);
-
     	int getDamage();
 
 		void update(){
