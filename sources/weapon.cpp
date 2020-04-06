@@ -21,10 +21,14 @@ void Weapon::bind(Ship* ship){
 
 void Weapon::fire(){
 	if(this->currentCooldown == 0){
-		Bullet* newBullet = new Bullet(this->ship->getCoords().getX(), this->ship->getCoords().getY(), this->imageAsSurf, this->ship->getRenderer(), this->_damage, this->_bulletHealth); // ###
-		newBullet->setVitesse( angleToVec(this->ship->getAngle()) * this->vitesse );
+		Point tmp = this->ship->getCoords();
+		Vec2d tmp2 = angleToVec(this->ship->getAngle());
+		tmp = tmp + tmp2;
+		Bullet* newBullet = new Bullet(tmp.getX(), tmp.getY(), this->imageAsSurf, this->ship->getRenderer(), this->_damage, this->_bulletHealth); // ###
+		newBullet->setVitesse(tmp2 * this->vitesse );
 		this->ship->bullets.push_front(newBullet);
 		this->currentCooldown = this->cooldown;
+	// remove tmp & tmp2
 	}
 }
 
