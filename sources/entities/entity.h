@@ -13,7 +13,7 @@ class Entity
         double angle;
         Vec2d vitesse;
         double inertie;
-
+        int _health = 100;
 
 
     public:
@@ -23,6 +23,8 @@ class Entity
 
         double getAngle();
         Vec2d getVitesse();
+
+        int getHealth();
 
         void setVitesse(Vec2d vit);
         void addVitesse(Vec2d vit);

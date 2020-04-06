@@ -3,23 +3,30 @@
 #ifndef __BULLET_H__
 #define __BULLET_H__
 
-class Bullet  : public Entity
+class Bullet : public Entity
 {
     private:
 
-    	int dmg;
+    	int _damage;
 
 
     public:
 
-    	Bullet(double x, double y, SDL_Surface* imageAsSurf, SDL_Renderer* renderer, int dmg): Entity(x, y,  imageAsSurf, renderer)
+    	Bullet(double x, double y, SDL_Surface* imageAsSurf, SDL_Renderer* renderer, int damage, int health): Entity(x, y,  imageAsSurf, renderer)
     			{
-    				this->dmg = dmg;
+    				this->_damage = damage;
+					this->_health = health;
     			}
 
-//    	Bullet(double x, double y, SDL_Surface* imageAsSurf, SDL_Renderer* renderer, int dmg);
+//    	Bullet(double x, double y, SDL_Surface* imageAsSurf, SDL_Renderer* renderer, int damage);
 
-    	int getDmg();
+    	int getDamage();
+
+		void update(){
+			Entity::update();
+			
+			(this->_health)--;
+		}
 
 }; 
 

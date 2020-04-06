@@ -56,6 +56,10 @@ void Ship::update(){
 	Entity::update();
 	for (std::list<Bullet*>::iterator it=this->bullets.begin(); it != this->bullets.end(); ++it){
  		(*it)->update();
+
+        if((*it)->getHealth() <= 0) { // Si la Bullet n'a plus de vie, on la supprime
+            this->bullets.erase(it--);
+        }
  	}
 	for (std::list<Weapon*>::iterator it=this->weapons.begin(); it != this->weapons.end(); ++it){
  		(*it)->update();

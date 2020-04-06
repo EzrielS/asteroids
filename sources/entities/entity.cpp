@@ -68,6 +68,10 @@ Point Entity::getCoords(){
 	return this->coords;
 }
 
+int Entity::getHealth() {
+	return _health;
+}
+
 SDL_Rect Entity::getRect(){
 	SDL_Rect tmpRect;
 	tmpRect.x = this->coords.getY();

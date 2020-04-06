@@ -3,8 +3,8 @@
 
 
 
-int Bullet::getDmg(){
-	return this->dmg;
+int Bullet::getDamage(){
+	return this->_damage;
 }
 
 

@@ -13,16 +13,17 @@ class Weapon
     private:
 
 	 	int lastUsed;
-		int dmg;
+		int _damage;
     	SDL_Surface* imageAsSurf;
 		double vitesse;
 		int cooldown;
     	int currentCooldown = 0;
+		int _bulletHealth;
 		Ship* ship;
 
     	
     public:
-    	Weapon(SDL_Surface* imageAsSurf, int dmg, double vitesse, int cooldown);
+    	Weapon(SDL_Surface* imageAsSurf, int damage, double vitesse, int cooldown, int bulletHealth);
     	void fire();
     	void bind(Ship* ship);
     	void update();
