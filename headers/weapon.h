@@ -17,7 +17,7 @@ class Weapon
     	SDL_Surface* imageAsSurf;
 		double vitesse;
 		int cooldown;
-    	int currentCooldown;
+    	int currentCooldown = 0;
 		Ship* ship;
 
     	
