@@ -32,6 +32,7 @@ SDL_Surface* getImageAsSurface(const char * file){
 	    std::cerr << "Erreur de chargement de l'image : " << SDL_GetError() << std::endl;
 	    exit (-1);
 	}
+	SDL_SetColorKey(ret, SDL_TRUE, SDL_MapRGB(ret->format, 0, 0, 0));
 	return ret;
 } 
 
