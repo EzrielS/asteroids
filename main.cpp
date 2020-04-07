@@ -38,6 +38,8 @@ SDL_Surface* getImageAsSurface(const char * file){
 
 int main(int argc, char** argv)
 {
+
+
 	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
 		return 0;
 	}
@@ -64,7 +66,7 @@ Weapon w1 = Weapon(
 	50); // bullet health
 w1.bind(&e);
 
-Asteroid a1 = Asteroid(	400, 400, std::list<SDL_Surface*> { getImageAsSurface("images/asteroide1.bmp") }, renderer);
+Asteroid a1 = Asteroid(	400, 400, std::list<SDL_Surface*> { getImageAsSurface("images/asteroide1.bmp"), getImageAsSurface("images/asteroide1.bmp"), getImageAsSurface("images/asteroide1.bmp") }, renderer);
 g.entities.push_front(&a1);
 
 	bool quit = false;

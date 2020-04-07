@@ -20,7 +20,8 @@ class Entity
 
     	
         Entity(double x, double y,  SDL_Surface* imageAsSurf, SDL_Renderer* renderer);
-
+        Entity(Point coords, SDL_Surface* imageAsSurf, SDL_Renderer* renderer);
+        
         double getAngle();
         Vec2d getVitesse();
 

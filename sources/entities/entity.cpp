@@ -1,6 +1,8 @@
 #include "./entity.h"
 #include "../../headers/vec2.h"
 
+
+
 Entity::Entity(double x, double y, SDL_Surface* imageAsSurf, SDL_Renderer* renderer){
 	this->renderer = renderer;	
 	this->image = SDL_CreateTextureFromSurface(renderer,imageAsSurf);
@@ -9,6 +11,15 @@ Entity::Entity(double x, double y, SDL_Surface* imageAsSurf, SDL_Renderer* rende
 	this->vitesse=Vec2d(0, 0);
 	this->inertie = 1;
 }
+Entity::Entity(Point coords, SDL_Surface* imageAsSurf, SDL_Renderer* renderer){
+	this->renderer = renderer;	
+	this->image = SDL_CreateTextureFromSurface(renderer,imageAsSurf);
+	this->coords = coords;
+	this->angle=0.;
+	this->vitesse=Vec2d(0, 0);
+	this->inertie = 1;
+}
+
 
 void Entity::update(){
 	this->coords = this->coords + this->vitesse;
