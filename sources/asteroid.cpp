@@ -19,6 +19,7 @@ void Asteroid::update(){
 }
 
 Asteroid::~Asteroid(){
+		/*
 		if(this->asteroidsAsSurface.size() > 0){
 			Asteroid* newAst1 = new Asteroid(this->coords, this->asteroidsAsSurface, renderer);
 			newAst1->pivot(30);
@@ -34,4 +35,5 @@ Asteroid::~Asteroid(){
 			Game::getInstance().entities.push_front(newAst2);
 			Game::getInstance().entities.push_front(newAst3);
 		}
+		*/
 }

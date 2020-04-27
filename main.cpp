@@ -34,8 +34,47 @@ SDL_Surface* getImageAsSurface(const char * file){
 	}
 	SDL_SetColorKey(ret, SDL_TRUE, SDL_MapRGB(ret->format, 0, 0, 0));
 	return ret;
-} 
+}
 
+bool checkCollisions(SDL_Rect A, SDL_Rect B) {
+	//Les côtés des rectangles
+    int leftA, leftB;
+    int rightA, rightB;
+    int topA, topB;
+    int bottomA, bottomB;
+ 
+    //Calcul les côtés du rectangle A
+    leftA = A.x;
+    rightA = A.x + A.w;
+    topA = A.y;
+    bottomA = A.y + A.h;
+ 
+    //Calcul les côtés du rectangle B
+    leftB = B.x;
+    rightB = B.x + B.w;
+    topB = B.y;
+    bottomB = B.y + B.h;
+
+	//Tests de collisions
+    if( bottomA <= topB ) {
+        return false;
+    }
+ 
+    if( topA >= bottomB ) {
+        return false;
+    }
+ 
+    if( rightA <= leftB ) {
+        return false;
+    }
+ 
+    if( leftA >= rightB ) {
+        return false;
+    }
+ 
+    //Si collision détectée
+    return true;
+}
 
 int main(int argc, char** argv)
 {
@@ -110,8 +149,39 @@ g.entities.push_front(&a1);
 		SDL_RenderClear(renderer);
 		SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
 		g.update();
-		g.draw();
 
+
+		for (std::list<Entity*>::iterator it=g.entities.begin(); it != g.entities.end(); ++it) { // Pour chaque entité
+
+			if (dynamic_cast<Asteroid*>(*it) != 0) { // Pour chaque asteroid
+
+				for (std::list<Entity*>::iterator it2=g.entities.begin(); it2 != g.entities.end(); ++it2) { // On le compare avec les autres entités
+					if(it != it2) { // On vérifie que ce n'est pas lui-même
+
+						if (dynamic_cast<Ship*>(*it2) != 0) { // Si l'entité est un vaisseau
+						
+							if(checkCollisions( (*it)->getRect(), (*it2)->getRect() )) {  // S'il touche un vaisseau
+								std::cout << "Vaisseau touché par un asteroid" << std::endl;
+							}
+
+						} else if (dynamic_cast<Bullet*>(*it2) != 0) { // Si l'entité est une balle
+
+							if(checkCollisions( (*it)->getRect(), (*it2)->getRect() )) {  // S'il touche une bullet
+								std::cout << "Asteroid touché par une bullet" << std::endl;
+							}
+
+						}
+
+					}
+				}
+				
+			}
+
+		}
+
+		std::cout << "-------------------" << std::endl;
+
+		g.draw();
 
     	SDL_RenderPresent(renderer);
 
