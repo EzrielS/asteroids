@@ -14,9 +14,11 @@ class Entity
         Vec2d vitesse;
         double inertie;
         int _health = 100;
+        int _damage = 100;
 
 
     public:
+        virtual ~Entity();
 
     	
         Entity(double x, double y,  SDL_Surface* imageAsSurf, SDL_Renderer* renderer);
@@ -26,11 +28,14 @@ class Entity
         Vec2d getVitesse();
 
         int getHealth();
+        int getDamage();
+
+        void getHit(int d);
 
         void setVitesse(Vec2d vit);
         void addVitesse(Vec2d vit);
         void pivot(double angle);
-        
+
         SDL_Renderer* getRenderer();
 
         void setInertie(double inertie);
@@ -40,6 +45,8 @@ class Entity
         SDL_Rect getRect();
 
         Point getCoords();
+
+
 
 
 };

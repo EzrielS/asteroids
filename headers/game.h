@@ -24,6 +24,8 @@ class Game
         SDL_Renderer* _renderer;
         std::list<Entity*> entities;
 
+        static void addEntity(Entity *e);
+
         void update();
         void draw();
         void init(SDL_Renderer* renderer);

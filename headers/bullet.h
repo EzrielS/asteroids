@@ -1,31 +1,22 @@
-#include "../sources/entities/entity.h"
-
 #ifndef __BULLET_H__
 #define __BULLET_H__
 
+#include "../sources/entities/entity.h"
+
 class Bullet : public Entity
 {
-    private:
+	private:
+		int _damage;
 
-    	int _damage;
 
+	public:
+		Bullet(double x, double y, SDL_Surface* imageAsSurf, SDL_Renderer* renderer, int damage, int health);
 
-    public:
+		~Bullet();
 
-    	Bullet(double x, double y, SDL_Surface* imageAsSurf, SDL_Renderer* renderer, int damage, int health): Entity(x, y,  imageAsSurf, renderer)
-    			{
-    				this->_damage = damage;
-					this->_health = health;
-    			}
+		int getDamage();
 
-    	int getDamage();
-
-		void update(){
-			Entity::update();
-			
-			(this->_health)--;
-		}
-
+		void update();
 }; 
 
 #endif

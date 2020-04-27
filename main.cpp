@@ -165,9 +165,15 @@ g.entities.push_front(&a1);
 							}
 
 						} else if (dynamic_cast<Bullet*>(*it2) != 0) { // Si l'entité est une balle
+							// std::cout << (*it2)->getHealth() << std::endl;
+							
 
 							if(checkCollisions( (*it)->getRect(), (*it2)->getRect() )) {  // S'il touche une bullet
 								std::cout << "Asteroid touché par une bullet" << std::endl;
+
+								(*it)->getHit((*it2)->getDamage()); // L'asteroid prend les dégats de la balle
+
+								(*it2)->getHit((*it2)->getHealth()); // La balle se suicide
 							}
 
 						}
@@ -177,9 +183,16 @@ g.entities.push_front(&a1);
 				
 			}
 
+
+			if((*it)->getHealth() <= 0) { // Si l'entité n'a plus de vie, on l'a supprime
+				(*it)->~Entity();
+				g.entities.erase(it--);
+			}
+
 		}
 
-		std::cout << "-------------------" << std::endl;
+
+		// std::cout << "-------------------" << std::endl;
 
 		g.draw();
 

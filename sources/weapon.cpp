@@ -20,7 +20,7 @@ void Weapon::bind(Ship* ship){
 
 
 void Weapon::fire(){
-	if(this->currentCooldown == 0){
+	if(this->currentCooldown == 0) {
 		Point tmp = this->ship->getCoords();
 		Vec2d tmp2 = angleToVec(this->ship->getAngle());
 		tmp = tmp + tmp2;
@@ -28,6 +28,8 @@ void Weapon::fire(){
 		newBullet->setVitesse(tmp2 * this->vitesse );
 		this->ship->bullets.push_front(newBullet);
 		this->currentCooldown = this->cooldown;
+
+		Game::addEntity(newBullet);
 	// remove tmp & tmp2
 	}
 }

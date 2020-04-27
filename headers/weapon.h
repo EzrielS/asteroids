@@ -1,11 +1,11 @@
-
-
 #ifndef __WEAPON_H__
 #define __WEAPON_H__
 
 class Entity;
 class Ship;
 // #include "../sources/ship.cpp"
+
+#include "../headers/game.h"
 
 
 class Weapon

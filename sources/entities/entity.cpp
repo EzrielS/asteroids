@@ -50,6 +50,10 @@ void Entity::draw(){
                     SDL_FLIP_NONE);
 }
 
+void Entity::getHit(int d) {
+	this->_health -= d;
+}
+
 double Entity::getAngle(){
 	return this->angle;
 }
@@ -83,6 +87,10 @@ int Entity::getHealth() {
 	return _health;
 }
 
+int Entity::getDamage() {
+	return _damage;
+}
+
 SDL_Rect Entity::getRect(){
 	SDL_Rect tmpRect;
 	tmpRect.x = this->coords.getY();
@@ -95,4 +103,8 @@ SDL_Rect Entity::getRect(){
 
 SDL_Renderer* Entity::getRenderer(){
 	return this->renderer;
+}
+
+Entity::~Entity() {
+	std::cout << "Entity destructeur" << std::endl;
 }

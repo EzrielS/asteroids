@@ -17,8 +17,8 @@ class Ship: public Entity {
 
     public:
         Ship(double x, double y, SDL_Surface* imageAsSurf, SDL_Renderer* renderer, int nbVie):
-        	Entity(x, y, imageAsSurf, renderer),
-        	nbVie(nbVie){}
+        Entity(x, y, imageAsSurf, renderer),
+        nbVie(nbVie){}
 
         virtual void update();
         virtual void draw();

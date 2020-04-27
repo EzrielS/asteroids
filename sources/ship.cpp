@@ -17,6 +17,7 @@ void Ship::update(){
 
         if((*it)->getHealth() <= 0) { // Si la Bullet n'a plus de vie, on la supprime
             this->bullets.erase(it--);
+			Game::getInstance().entities.remove(*it);
         }
  	}
 	for (std::list<Weapon*>::iterator it=this->weapons.begin(); it != this->weapons.end(); ++it){
