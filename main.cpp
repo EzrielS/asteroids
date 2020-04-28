@@ -154,6 +154,7 @@ int main(int argc, char** argv)
 		for (std::list<Entity*>::iterator it=g.entities.begin(); it != g.entities.end(); ++it) { // Pour chaque entité
 
 			if (dynamic_cast<Asteroid*>(*it) != 0) { // Pour chaque asteroid
+				Asteroid* tempAsteroid = dynamic_cast<Asteroid*>(*it);
 
 				for (std::list<Entity*>::iterator it2=g.entities.begin(); it2 != g.entities.end(); ++it2) { // On le compare avec les autres entités
 					if(it != it2) { // On vérifie que ce n'est pas lui-même
@@ -161,7 +162,7 @@ int main(int argc, char** argv)
 						if (dynamic_cast<Ship*>(*it2) != 0) { // Si l'entité est un vaisseau
 							Ship* tempShip = dynamic_cast<Ship*>(*it2);
 						
-							if(checkCollisions( (*it)->getRect(), tempShip->getRect() )) {  // S'il touche un vaisseau
+							if(checkCollisions( tempAsteroid->getRect(), tempShip->getRect() )) {  // S'il touche un vaisseau
 								std::cout << "Vaisseau touché par un asteroid" << std::endl;
 							}
 
@@ -169,10 +170,10 @@ int main(int argc, char** argv)
 							Bullet* tempBullet = dynamic_cast<Bullet*>(*it2);
 							// std::cout << (*it2)->getHealth() << std::endl;
 
-							if(checkCollisions( (*it)->getRect(), tempBullet->getRect() )) {  // S'il touche une bullet
+							if(checkCollisions( tempAsteroid->getRect(), tempBullet->getRect() )) {  // S'il touche une bullet
 								std::cout << "Asteroid touché par une bullet" << std::endl;
 
-								(*it)->gotHit(tempBullet->getDamage()); // L'asteroid prend les dégats de la balle
+								tempAsteroid->gotHit(tempBullet->getDamage()); // L'asteroid prend les dégats de la balle
 
 								tempBullet->gotHit(tempBullet->getHealth()); // La balle se suicide
 							}
