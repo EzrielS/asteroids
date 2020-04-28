@@ -1,5 +1,4 @@
 #include "../headers/game.h"
-#include <list>
 
 Game Game::_instance = Game();
 
@@ -12,8 +11,7 @@ Game& Game::getInstance() {
 }
 
 void Game::init(SDL_Renderer* renderer) {
-	_renderer=renderer;
-//    _ship = Ship();
+	_renderer = renderer;
 }
 
 void Game::addEntity(Entity *e) {
@@ -21,13 +19,13 @@ void Game::addEntity(Entity *e) {
 }
 
 void Game::update(){
-	for (std::list<Entity*>::iterator it=this->entities.begin(); it != this->entities.end(); ++it){
+	for (std::list<Entity*>::iterator it=this->entities.begin(); it != this->entities.end(); ++it) {
 		(*it)->update();
 	}
 }
 
 void Game::draw(){
-	for (std::list<Entity*>::iterator it=this->entities.begin(); it != this->entities.end(); ++it){
- 		(*it)->draw();
+	for (std::list<Entity*>::iterator it=this->entities.begin(); it != this->entities.end(); ++it) {
+		(*it)->draw();
 	}
 }

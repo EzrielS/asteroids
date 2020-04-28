@@ -1,38 +1,36 @@
 #include "../headers/ship.h"
-#include <typeinfo>
-// #include "../sources/weapon.cpp"
-#include "../headers/weapon.h"
 
+Ship::Ship(double x, double y, SDL_Surface* imageAsSurf, SDL_Renderer* renderer, int nbVie) :
+	Entity(x, y, imageAsSurf, renderer), _nbVie(nbVie) { }
 
-
-void Ship::speedUp() {
-	this->addVitesse(angleToVec(this->getAngle()));		// todo : acceleration
+std::list<Bullet*> Ship::getBullets() {
+	return this->_bullets;
 }
 
-
-void Ship::update(){
+void Ship::update() {
 	Entity::update();
-	for (std::list<Bullet*>::iterator it=this->bullets.begin(); it != this->bullets.end(); ++it){
- 		(*it)->update();
+	for (std::list<Bullet*>::iterator it=this->_bullets.begin(); it != this->_bullets.end(); ++it) {
+		(*it)->update();
 
-        if((*it)->getHealth() <= 0) { // Si la Bullet n'a plus de vie, on la supprime
-            this->bullets.erase(it--);
+		if((*it)->getHealth() <= 0) { // Si la Bullet n'a plus de vie, on la supprime
+			this->_bullets.erase(it--);
 			Game::getInstance().entities.remove(*it);
-        }
- 	}
-	for (std::list<Weapon*>::iterator it=this->weapons.begin(); it != this->weapons.end(); ++it){
- 		(*it)->update();
- 	}
+		}
+	}
+
+	for (std::list<Weapon*>::iterator it=this->_weapons.begin(); it != this->_weapons.end(); ++it) {
+		(*it)->update();
+	}
 }
 
-
-void Ship::draw(){
+void Ship::draw() {
 	Entity::draw();
-	for (std::list<Bullet*>::iterator it=this->bullets.begin(); it != this->bullets.end(); ++it){
- 		(*it)->draw();
- 	}
+
+	for (std::list<Bullet*>::iterator it=this->_bullets.begin(); it != this->_bullets.end(); ++it) {
+		(*it)->draw();
+	}
 }
 
-void Ship::giveWeapon(Weapon* w){
-	this->weapons.push_front(w);
+void Ship::giveWeapon(Weapon* w) {
+	this->_weapons.push_front(w);
 }

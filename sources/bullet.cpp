@@ -1,6 +1,4 @@
 #include "../headers/bullet.h"
-#include "../sources/entities/entity.h"
-
 
 Bullet::Bullet(double x, double y, SDL_Surface* imageAsSurf, SDL_Renderer* renderer, int damage, int health) : Entity(x, y,  imageAsSurf, renderer) {
 	this->_damage = damage;

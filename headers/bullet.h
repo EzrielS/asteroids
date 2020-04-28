@@ -8,7 +8,6 @@ class Bullet : public Entity
 	private:
 		int _damage;
 
-
 	public:
 		Bullet(double x, double y, SDL_Surface* imageAsSurf, SDL_Renderer* renderer, int damage, int health);
 

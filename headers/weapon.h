@@ -1,33 +1,27 @@
 #ifndef __WEAPON_H__
 #define __WEAPON_H__
 
-class Entity;
 class Ship;
-// #include "../sources/ship.cpp"
 
 #include "../headers/game.h"
-
 
 class Weapon
 {
     private:
-
-	 	int lastUsed;
+		int _lastUsed;
 		int _damage;
-    	SDL_Surface* imageAsSurf;
-		double vitesse;
-		int cooldown;
-    	int currentCooldown = 0;
+		SDL_Surface* _imageAsSurf;
+		double _vitesse;
+		int _cooldown;
+		int _currentCooldown = 0;
 		int _bulletHealth;
-		Ship* ship;
+		Ship* _ship;
 
-    	
-    public:
-    	Weapon(SDL_Surface* imageAsSurf, int damage, double vitesse, int cooldown, int bulletHealth);
-    	void fire();
-    	void bind(Ship* ship);
-    	void update();
-
+	public:
+		Weapon(SDL_Surface* imageAsSurf, int damage, double vitesse, int cooldown, int bulletHealth);
+		void fire();
+		void bind(Ship* ship);
+		void update();
 };
 
 #endif

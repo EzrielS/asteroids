@@ -3,10 +3,6 @@
 
 #include <list> 
 
-#include "point.h"
-#include "ship.h"
-#include "../sources/entities/entity.h"
-
 class Game
 {
     private:
@@ -15,8 +11,6 @@ class Game
         static Game _instance;
 
     public:
-//        Ship _ship;
-
         Game(Game const&) = delete;
         Game& operator=(Game const&) = delete;
         static Game& getInstance();

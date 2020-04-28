@@ -14,7 +14,7 @@
 
 #include <math.h>  
 
-
+/* A DELETE
 void draw(SDL_Renderer* renderer)
 {
 	int x,y;
@@ -24,13 +24,13 @@ void draw(SDL_Renderer* renderer)
 		SDL_RenderDrawPoint(renderer,x,y);
 	}
 }
-
+*/
 
 SDL_Surface* getImageAsSurface(const char * file){
 	SDL_Surface* ret = SDL_LoadBMP(file);
 	if(!ret){
-	    std::cerr << "Erreur de chargement de l'image : " << SDL_GetError() << std::endl;
-	    exit (-1);
+		std::cerr << "Erreur de chargement de l'image : " << SDL_GetError() << std::endl;
+		exit (-1);
 	}
 	SDL_SetColorKey(ret, SDL_TRUE, SDL_MapRGB(ret->format, 0, 0, 0));
 	return ret;
@@ -78,8 +78,6 @@ bool checkCollisions(SDL_Rect A, SDL_Rect B) {
 
 int main(int argc, char** argv)
 {
-
-
 	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
 		return 0;
 	}
@@ -93,21 +91,22 @@ int main(int argc, char** argv)
 	g.init(renderer);
 
 
-Ship e  = Ship(300, 500, getImageAsSurface("images/vaisseau2.bmp"), renderer, 10);
-e.setInertie(0.999);
-g.entities.push_front(&e);
+	Ship e  = Ship(300, 500, getImageAsSurface("images/vaisseau2.bmp"), renderer, 10);
+	e.setInertie(0.999);
+	g.entities.push_front(&e);
 
 
-Weapon w1 = Weapon(
-	getImageAsSurface("images/tir1.bmp"), 
-	1,   // dmg
-	30,  // vitesse
-	5,	 // cooldown
-	50); // bullet health
-w1.bind(&e);
+	Weapon w1 = Weapon(
+		getImageAsSurface("images/tir1.bmp"), 
+		100,   // dmg
+		15,  // vitesse
+		5,	 // cooldown
+		50); // bullet health
+	w1.bind(&e);
 
-Asteroid a1 = Asteroid(	400, 400, std::list<SDL_Surface*> { getImageAsSurface("images/asteroide1.bmp"), getImageAsSurface("images/asteroide1.bmp"), getImageAsSurface("images/asteroide1.bmp") }, renderer);
-g.entities.push_front(&a1);
+	Asteroid a1 = Asteroid(	400, 400, std::list<SDL_Surface*> { getImageAsSurface("images/asteroide1.bmp"),
+		getImageAsSurface("images/asteroide1.bmp"), getImageAsSurface("images/asteroide1.bmp") }, renderer);
+	g.entities.push_front(&a1);
 
 	bool quit = false;
 
@@ -128,9 +127,10 @@ g.entities.push_front(&a1);
 							e.pivot(90/5);
 							break;
 						case SDLK_UP:
-							e.addVitesse(angleToVec(e.getAngle()));
+							e.speedUp(angleToVec(e.getAngle()));
 							break;
 						case SDLK_DOWN:
+							e.slowDown(angleToVec(e.getAngle()));
 							break;
 						case SDLK_SPACE	:
 							w1.fire();
@@ -159,21 +159,22 @@ g.entities.push_front(&a1);
 					if(it != it2) { // On vérifie que ce n'est pas lui-même
 
 						if (dynamic_cast<Ship*>(*it2) != 0) { // Si l'entité est un vaisseau
+							Ship* tempShip = dynamic_cast<Ship*>(*it2);
 						
-							if(checkCollisions( (*it)->getRect(), (*it2)->getRect() )) {  // S'il touche un vaisseau
+							if(checkCollisions( (*it)->getRect(), tempShip->getRect() )) {  // S'il touche un vaisseau
 								std::cout << "Vaisseau touché par un asteroid" << std::endl;
 							}
 
 						} else if (dynamic_cast<Bullet*>(*it2) != 0) { // Si l'entité est une balle
+							Bullet* tempBullet = dynamic_cast<Bullet*>(*it2);
 							// std::cout << (*it2)->getHealth() << std::endl;
-							
 
-							if(checkCollisions( (*it)->getRect(), (*it2)->getRect() )) {  // S'il touche une bullet
+							if(checkCollisions( (*it)->getRect(), tempBullet->getRect() )) {  // S'il touche une bullet
 								std::cout << "Asteroid touché par une bullet" << std::endl;
 
-								(*it)->getHit((*it2)->getDamage()); // L'asteroid prend les dégats de la balle
+								(*it)->gotHit(tempBullet->getDamage()); // L'asteroid prend les dégats de la balle
 
-								(*it2)->getHit((*it2)->getHealth()); // La balle se suicide
+								tempBullet->gotHit(tempBullet->getHealth()); // La balle se suicide
 							}
 
 						}
@@ -190,9 +191,6 @@ g.entities.push_front(&a1);
 			}
 
 		}
-
-
-		// std::cout << "-------------------" << std::endl;
 
 		g.draw();
 
