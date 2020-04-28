@@ -13,7 +13,7 @@
 #include "sources/entities/entity.cpp"
 
 #include <math.h>  
-
+#include <time.h>
 /* A DELETE
 void draw(SDL_Renderer* renderer)
 {
@@ -78,6 +78,7 @@ bool checkCollisions(SDL_Rect A, SDL_Rect B) {
 
 int main(int argc, char** argv)
 {
+	srand(time(NULL));
 	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
 		return 0;
 	}
@@ -156,7 +157,13 @@ int main(int argc, char** argv)
 			if (dynamic_cast<Asteroid*>(*it) != 0) { // Pour chaque asteroid
 				Asteroid* tempAsteroid = dynamic_cast<Asteroid*>(*it);
 
-				for (std::list<Entity*>::iterator it2=g.entities.begin(); it2 != g.entities.end(); ++it2) { // On le compare avec les autres entités
+
+
+				for (std::list<Entity*>::iterator it2=g.entities.begin(); it2 != g.entities.end(); ) { // On le compare avec les autres entités
+
+					bool bRemoved = false;
+
+
 					if(it != it2) { // On vérifie que ce n'est pas lui-même
 
 						if (dynamic_cast<Ship*>(*it2) != 0) { // Si l'entité est un vaisseau
@@ -175,11 +182,17 @@ int main(int argc, char** argv)
 
 								tempAsteroid->gotHit(tempBullet->getDamage()); // L'asteroid prend les dégats de la balle
 
-								tempBullet->gotHit(tempBullet->getHealth()); // La balle se suicide
+//								tempBullet->gotHit(tempBullet->getHealth()); // La balle se suicide
+								(*it2)->~Entity();
+								it2 = g.entities.erase(it2);
+								bRemoved = true;
 							}
 
 						}
 
+					}
+					if(!bRemoved){
+						++it2;
 					}
 				}
 				

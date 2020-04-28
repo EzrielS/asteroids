@@ -20,15 +20,22 @@ Asteroid::~Asteroid() {
 	
 	if(this->_asteroidsAsSurface.size() > 0) {
 		Asteroid* newAst1 = new Asteroid(this->_coords, this->_asteroidsAsSurface, this->_renderer);
-		newAst1->pivot(30);
-		newAst1->setVitesse(angleToVec(30)*10);
+		int tmp = rand()%360;
+		newAst1->pivot(tmp);
+		newAst1->setVitesse(angleToVec(tmp)*10);
 
 		Asteroid* newAst2 = new Asteroid(this->_coords, this->_asteroidsAsSurface, this->_renderer);
-		newAst2->pivot(30+120);
-		newAst2->setVitesse(angleToVec(30+120)*10);
+		newAst2->pivot(tmp+120);
+		newAst2->setVitesse(angleToVec(tmp+120)*10);
+
+		Asteroid* newAst3 = new Asteroid(this->_coords, this->_asteroidsAsSurface, this->_renderer);
+		newAst3->pivot(tmp+240);
+		newAst3->setVitesse(angleToVec(tmp+240)*10);
 
 		Game::getInstance().entities.push_front(newAst1);
 		Game::getInstance().entities.push_front(newAst2);
+		Game::getInstance().entities.push_front(newAst3);
+
 	}
 }
 
