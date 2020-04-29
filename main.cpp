@@ -11,6 +11,7 @@
 #include "sources/asteroid.cpp"
 #include "headers/vec2.h"
 #include "sources/entities/entity.cpp"
+#include "sources/print_string.cpp"
 
 #include <math.h>  
 #include <time.h>
@@ -149,6 +150,9 @@ int main(int argc, char** argv)
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
 		SDL_RenderClear(renderer);
 		SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
+		print_str("Test. C'est un succes", Point(0, 0));
+
+
 		g.update();
 
 
@@ -187,7 +191,6 @@ int main(int argc, char** argv)
 								it2 = g.entities.erase(it2);
 								bRemoved = true;
 							}
-
 						}
 
 					}
