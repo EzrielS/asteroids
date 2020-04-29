@@ -5,7 +5,6 @@
 //int simplex;
 
 int print_char(char c, Point p){
-	std::cout << "printing " << c << std::endl;
 	Game& game = Game::getInstance();
 	if (c < 32 || c > 126)
 		std::cout << "Fatal error : this char cannot be printed (" << c << ")" << std::endl;
@@ -22,7 +21,6 @@ int print_char(char c, Point p){
 		}
 		else{
 			if(! isLeve){
-				std::cout << "	printing line " <<  x << " "  << y << " "  << simplex[c][i] << " "  << simplex[c][i+1] << " "  << std::endl;
 				SDL_RenderDrawLine(game._renderer, absX + x, absY - y, absX + simplex[c][i], absY - simplex[c][i+1]);
 			}
 			else{
