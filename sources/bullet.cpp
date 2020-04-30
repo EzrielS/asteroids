@@ -1,8 +1,9 @@
 #include "../headers/bullet.h"
 
-Bullet::Bullet(double x, double y, SDL_Surface* imageAsSurf, SDL_Renderer* renderer, int damage, int health) : Entity(x, y,  imageAsSurf, renderer) {
+Bullet::Bullet(double x, double y, SDL_Surface* imageAsSurf, SDL_Renderer* renderer, int damage, int health, Ship* parent) : Entity(x, y,  imageAsSurf, renderer) {
 	this->_damage = damage;
 	this->_health = health;
+	this->_parent = parent;
 }
 
 Bullet::~Bullet() {
@@ -17,4 +18,8 @@ void Bullet::update() {
 	Entity::update();
 
 	(this->_health)--;
+}
+
+Ship* Bullet::getParent(){
+	return this->_parent;
 }

@@ -22,6 +22,7 @@ class Ship : public Entity {
         void giveWeapon(Weapon* w);
         int getVie();
         int getScore();
+        void addScore(int nb);
 
 };
 

@@ -20,7 +20,7 @@ void Weapon::fire(){
 		Point tmp = this->_ship->getCoords();
 		Vec2d tmp2 = angleToVec(this->_ship->getAngle());
 		tmp = tmp + tmp2;
-		Bullet* newBullet = new Bullet(tmp.getX(), tmp.getY(), this->_imageAsSurf, this->_ship->getRenderer(), this->_damage, this->_bulletHealth);
+		Bullet* newBullet = new Bullet(tmp.getX(), tmp.getY(), this->_imageAsSurf, this->_ship->getRenderer(), this->_damage, this->_bulletHealth, this->_ship);
 		newBullet->setVitesse(tmp2 * this->_vitesse );
 		this->_ship->getBullets().push_front(newBullet);
 		this->_currentCooldown = this->_cooldown;

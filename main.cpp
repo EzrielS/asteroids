@@ -197,7 +197,7 @@ int main(int argc, char** argv)
 								std::cout << "Asteroid touché par une bullet" << std::endl;
 
 								tempAsteroid->gotHit(tempBullet->getDamage()); // L'asteroid prend les dégats de la balle
-
+								tempBullet->getParent()->addScore(1);
 //								tempBullet->gotHit(tempBullet->getHealth()); // La balle se suicide
 								(*it2)->~Entity();
 								it2 = g.entities.erase(it2);
