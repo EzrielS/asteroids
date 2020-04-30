@@ -1,7 +1,7 @@
 #include "../headers/ship.h"
 
 Ship::Ship(double x, double y, SDL_Surface* imageAsSurf, SDL_Renderer* renderer, int nbVie) :
-	Entity(x, y, imageAsSurf, renderer), _nbVie(nbVie) { }
+	Entity(x, y, imageAsSurf, renderer), _nbVie(nbVie), _score(0) { }
 
 std::list<Bullet*> Ship::getBullets() {
 	return this->_bullets;
@@ -33,4 +33,12 @@ void Ship::draw() {
 
 void Ship::giveWeapon(Weapon* w) {
 	this->_weapons.push_front(w);
+}
+
+int Ship::getVie(){
+	return this->_nbVie;
+}
+
+int Ship::getScore(){
+	return this->_score;
 }

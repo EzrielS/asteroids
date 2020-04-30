@@ -7,6 +7,7 @@
 class Ship : public Entity {
     private:
         int _nbVie;
+        int _score;
         std::list<Weapon*> _weapons;
         std::list<Bullet*> _bullets;
 
@@ -19,6 +20,9 @@ class Ship : public Entity {
         virtual void draw();
 
         void giveWeapon(Weapon* w);
+        int getVie();
+        int getScore();
+
 };
 
 #endif

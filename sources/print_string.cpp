@@ -2,7 +2,6 @@
 #include "../headers/point.h"
 #include "./simplex.cpp"
 
-//int simplex;
 
 int print_char(char c, Point p){
 	Game& game = Game::getInstance();

@@ -150,7 +150,19 @@ int main(int argc, char** argv)
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
 		SDL_RenderClear(renderer);
 		SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
-		print_str("Test. C'est un succes", Point(0, 0));
+
+/*
+ *	print_hud - à separer à terme
+ *
+*/
+
+		print_str("Nombre de vies : " + std::to_string(e.getVie()) + "   Score : " +  std::to_string(e.getScore()), Point(0, 0));
+
+
+
+
+//////////////////////
+
 
 
 		g.update();
