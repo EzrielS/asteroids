@@ -10,6 +10,14 @@ Weapon::Weapon(SDL_Surface* imageAsSurf, int damage, double vitesse, int cooldow
 	this->_bulletHealth = bulletHealth;
 }
 
+double Weapon::getVitesse() {
+	return this->_vitesse;
+}
+
+void Weapon::setVitesse(double v) {
+	this->_vitesse = v;
+}
+
 void Weapon::bind(Ship* ship){
 	this->_ship = ship;
 	this->_ship->giveWeapon(this);

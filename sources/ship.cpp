@@ -35,6 +35,10 @@ void Ship::giveWeapon(Weapon* w) {
 	this->_weapons.push_front(w);
 }
 
+std::list<Weapon*> Ship::getWeapons() {
+	return this->_weapons;
+}
+
 int Ship::getVie(){
 	return this->_nbVie;
 }

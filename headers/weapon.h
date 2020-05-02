@@ -19,6 +19,8 @@ class Weapon
 
 	public:
 		Weapon(SDL_Surface* imageAsSurf, int damage, double vitesse, int cooldown, int bulletHealth);
+		double getVitesse();
+		void setVitesse(double v);
 		void fire();
 		void bind(Ship* ship);
 		void update();

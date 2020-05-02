@@ -7,6 +7,7 @@
 #include "sources/point.cpp"
 #include "sources/ship.cpp"
 #include "sources/weapon.cpp"
+#include "sources/bonus.cpp"
 #include "sources/game.cpp"
 #include "sources/asteroid.cpp"
 #include "headers/vec2.h"
@@ -97,11 +98,12 @@ int main(int argc, char** argv)
 	e.setInertie(0.999);
 	g.entities.push_front(&e);
 
+	bool bonusActivated = false;
 
 	Weapon w1 = Weapon(
 		getImageAsSurface("images/tir1.bmp"), 
 		100,   // dmg
-		15,  // vitesse
+		7.5,  // vitesse
 		5,	 // cooldown
 		50); // bullet health
 	w1.bind(&e);
@@ -109,6 +111,8 @@ int main(int argc, char** argv)
 	Asteroid a1 = Asteroid(	400, 400, std::list<SDL_Surface*> { getImageAsSurface("images/asteroide1.bmp"),
 		getImageAsSurface("images/asteroide1.bmp"), getImageAsSurface("images/asteroide1.bmp") }, renderer);
 	g.entities.push_front(&a1);
+
+	Bonus bonusAttackSpeed = Bonus(600-150, 1000-75, getImageAsSurface("images/attackspeed_bonus.bmp"), renderer );
 
 	bool quit = false;
 
@@ -167,6 +171,9 @@ int main(int argc, char** argv)
 
 		g.update();
 
+		bonusAttackSpeed.draw();
+
+
 
 		for (std::list<Entity*>::iterator it=g.entities.begin(); it != g.entities.end(); ++it) { // Pour chaque entité
 
@@ -198,9 +205,8 @@ int main(int argc, char** argv)
 
 								tempAsteroid->gotHit(tempBullet->getDamage()); // L'asteroid prend les dégats de la balle
 								tempBullet->getParent()->addScore(1);
-//								tempBullet->gotHit(tempBullet->getHealth()); // La balle se suicide
 								(*it2)->~Entity();
-								it2 = g.entities.erase(it2);
+								//it2 = g.entities.erase(it2);
 								bRemoved = true;
 							}
 						}
@@ -211,6 +217,16 @@ int main(int argc, char** argv)
 					}
 				}
 				
+			} else if(dynamic_cast<Ship*>(*it) != 0) {  // Pour chaque asteroid
+				Ship* tempShip = dynamic_cast<Ship*>(*it);
+
+				if(!bonusActivated && checkCollisions( tempShip->getRect(), bonusAttackSpeed.getRect() )) {  // S'il touche un bonus
+					std::cout << "Bonus touché par un Ship" << std::endl;
+					double vitesse = tempShip->getWeapons().front()->getVitesse();
+					tempShip->getWeapons().front()->setVitesse(vitesse*2);
+					bonusAttackSpeed.~Bonus();
+					bonusActivated = true;
+				}
 			}
 
 
