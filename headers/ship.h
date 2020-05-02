@@ -21,6 +21,7 @@ class Ship : public Entity {
 
         void giveWeapon(Weapon* w);
         int getVie();
+        void setVie(int v);
         int getScore();
         std::list<Weapon*> getWeapons();
 

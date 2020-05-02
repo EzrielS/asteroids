@@ -43,6 +43,10 @@ int Ship::getVie(){
 	return this->_nbVie;
 }
 
+void Ship::setVie(int v) {
+	this->_nbVie = v;
+}
+
 int Ship::getScore(){
 	return this->_score;
 }

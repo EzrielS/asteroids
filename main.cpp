@@ -16,6 +16,7 @@
 
 #include <math.h>  
 #include <time.h>
+
 /* A DELETE
 void draw(SDL_Renderer* renderer)
 {
@@ -78,6 +79,11 @@ bool checkCollisions(SDL_Rect A, SDL_Rect B) {
     return true;
 }
 
+void removeInvincibilityAfter2Seconds(bool& b) {
+	std::this_thread::sleep_for (std::chrono::seconds(2));
+	b = false;
+}
+
 int main(int argc, char** argv)
 {
 	srand(time(NULL));
@@ -94,11 +100,9 @@ int main(int argc, char** argv)
 	g.init(renderer);
 
 
-	Ship e  = Ship(300, 500, getImageAsSurface("images/vaisseau2.bmp"), renderer, 10);
+	Ship e = Ship(300, 500, getImageAsSurface("images/vaisseau2.bmp"), renderer, 10);
 	e.setInertie(0.999);
 	g.entities.push_front(&e);
-
-	bool bonusActivated = false;
 
 	Weapon w1 = Weapon(
 		getImageAsSurface("images/tir1.bmp"), 
@@ -115,6 +119,8 @@ int main(int argc, char** argv)
 	Bonus bonusAttackSpeed = Bonus(600-150, 1000-75, getImageAsSurface("images/attackspeed_bonus.bmp"), renderer );
 
 	bool quit = false;
+	bool bonusActivated = false;
+	bool shipInvincible = false;
 
 	while (!quit)
 	{
@@ -168,11 +174,10 @@ int main(int argc, char** argv)
 //////////////////////
 
 
-
 		g.update();
 
-		bonusAttackSpeed.draw();
 
+		bonusAttackSpeed.draw(); // TODO Gérer ça différément (un thread avec un timer aléatoire ??)
 
 
 		for (std::list<Entity*>::iterator it=g.entities.begin(); it != g.entities.end(); ++it) { // Pour chaque entité
@@ -180,25 +185,28 @@ int main(int argc, char** argv)
 			if (dynamic_cast<Asteroid*>(*it) != 0) { // Pour chaque asteroid
 				Asteroid* tempAsteroid = dynamic_cast<Asteroid*>(*it);
 
-
-
 				for (std::list<Entity*>::iterator it2=g.entities.begin(); it2 != g.entities.end(); ) { // On le compare avec les autres entités
 
 					bool bRemoved = false;
-
 
 					if(it != it2) { // On vérifie que ce n'est pas lui-même
 
 						if (dynamic_cast<Ship*>(*it2) != 0) { // Si l'entité est un vaisseau
 							Ship* tempShip = dynamic_cast<Ship*>(*it2);
 						
-							if(checkCollisions( tempAsteroid->getRect(), tempShip->getRect() )) {  // S'il touche un vaisseau
+							if(!shipInvincible && checkCollisions( tempAsteroid->getRect(), tempShip->getRect() )) {  // S'il touche un vaisseau
 								std::cout << "Vaisseau touché par un asteroid" << std::endl;
+								tempShip->setVie(tempShip->getVie() - 1); // Le vaisseau perd 1 point de vie
+
+								// Le vaisseau est invincible pndant 2 secondes après être touché.
+								// Un thread s'occupe de modifier le booléen après 2 secondes pour ne pas bloquer le jeu.
+								shipInvincible = true;
+								std::thread t1(removeInvincibilityAfter2Seconds, std::ref(shipInvincible));
+								t1.detach();
 							}
 
 						} else if (dynamic_cast<Bullet*>(*it2) != 0) { // Si l'entité est une balle
 							Bullet* tempBullet = dynamic_cast<Bullet*>(*it2);
-							// std::cout << (*it2)->getHealth() << std::endl;
 
 							if(checkCollisions( tempAsteroid->getRect(), tempBullet->getRect() )) {  // S'il touche une bullet
 								std::cout << "Asteroid touché par une bullet" << std::endl;
@@ -217,7 +225,7 @@ int main(int argc, char** argv)
 					}
 				}
 				
-			} else if(dynamic_cast<Ship*>(*it) != 0) {  // Pour chaque asteroid
+			} else if(dynamic_cast<Ship*>(*it) != 0) {  // Pour chaque vaisseau
 				Ship* tempShip = dynamic_cast<Ship*>(*it);
 
 				if(!bonusActivated && checkCollisions( tempShip->getRect(), bonusAttackSpeed.getRect() )) {  // S'il touche un bonus
