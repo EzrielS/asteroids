@@ -13,7 +13,6 @@ Bonus::Bonus(Point coords, SDL_Surface* imageAsSurf, SDL_Renderer* renderer){
 }
 
 Bonus::~Bonus() {
-    std::cout << "Destructeur Bonus" << std::endl;
     SDL_DestroyTexture(this->_image);
 }
 

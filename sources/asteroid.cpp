@@ -16,8 +16,6 @@ Asteroid::Asteroid(Point coords, std::list<SDL_Surface*> _asteroidsAsSurface, SD
 
 
 Asteroid::~Asteroid() {
-	std::cout << "Asteroid destructeur" << std::endl;
-	
 	if(this->_asteroidsAsSurface.size() > 0) {
 		Asteroid* newAst1 = new Asteroid(this->_coords, this->_asteroidsAsSurface, this->_renderer);
 		int tmp = rand()%360;

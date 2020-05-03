@@ -6,9 +6,7 @@ Bullet::Bullet(double x, double y, SDL_Surface* imageAsSurf, SDL_Renderer* rende
 	this->_parent = parent;
 }
 
-Bullet::~Bullet() {
-	std::cout << "Bullet destructeur" << std::endl;
-}
+Bullet::~Bullet() { }
 
 int Bullet::getDamage(){
 	return this->_damage;
