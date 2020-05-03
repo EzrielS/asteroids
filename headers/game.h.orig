@@ -13,12 +13,12 @@ class Game
     public:
         SDL_Renderer* _renderer; // Le renderer de la Game
         std::list<Entity*> entities; // La liste des entités de la game
-	std::list<Bonus*> bonuses; // les bonus
- 	bool quit = false; // quittes-t-on
+
     private:
         Game(); // Constructeur privé de la classe
         ~Game(); // Constructeur privé de la classe
         static Game _instance; // Instance unique et privée de la classe
+
 
     public:
         /**
@@ -36,9 +36,13 @@ class Game
          * @return L'unique instance de la classe Game
          */
         static Game& getInstance();
+<<<<<<< HEAD
         
-
-        
+        SDL_Renderer* _renderer;
+        std::list<Entity*> entities;
+        std::list<Bonus*> bonuses;
+=======
+>>>>>>> 3547a62e0d93fca0d5499613b21042cd7df4de92
 
         /**
          * Fonction qui permet d'ajouter une entité au jeu
@@ -46,24 +50,29 @@ class Game
          */
         static void addEntity(Entity *e);
 
+<<<<<<< HEAD
+        bool quit = false;
+
+=======
         /**
          * S'occupe de mettre à jour toutes les entités à l'écran
          */
+>>>>>>> 3547a62e0d93fca0d5499613b21042cd7df4de92
         void update();
 
         /**
          * S'occupe de dessiner toutes les entités à l'écran
          */
         void draw();
-        /**
-         * S'occupe de calculer les collisions des entités à l'écran
-         */
-	void collisions();
+<<<<<<< HEAD
+        void collisions();
+=======
 
         /**
          * Fonction qui permet d'initialiser une partie
          * @param renderer Le renderer de la partie
          */
+>>>>>>> 3547a62e0d93fca0d5499613b21042cd7df4de92
         void init(SDL_Renderer* renderer);
 
         /**

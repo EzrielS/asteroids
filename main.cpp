@@ -58,7 +58,7 @@ int main(int argc, char** argv)
 	g.init(renderer);
 
 
-	Ship e = Ship(300, 500, getImageAsSurface("images/vaisseau2.bmp"), renderer, 2);
+	Ship e = Ship(300, 500, getImageAsSurface("images/vaisseau2.bmp"), renderer, 10);
 	e.setInertie(0.999);
 	g.entities.push_front(&e);
 
@@ -101,7 +101,7 @@ int main(int argc, char** argv)
 						case SDLK_DOWN:
 							e.slowDown(angleToVec(e.getAngle()));
 							break;
-						case SDLK_LALT:
+						case SDLK_LCTRL:
 							w1.fire();
 							break;
 						case SDLK_SPACE	:

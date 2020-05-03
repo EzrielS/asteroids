@@ -17,6 +17,10 @@ Bonus::~Bonus() {
     SDL_DestroyTexture(this->_image);
 }
 
+void doBonus() {
+
+}
+
 void Bonus::draw(){
 	SDL_Rect tmpRect = this->getRect();
 	SDL_RenderCopyEx(this->_renderer,
