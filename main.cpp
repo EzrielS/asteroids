@@ -113,7 +113,7 @@ int main(int argc, char** argv)
 	w1.bind(&e);
 
 	Asteroid a1 = Asteroid(	400, 400, std::list<SDL_Surface*> { getImageAsSurface("images/asteroide1.bmp"),
-		getImageAsSurface("images/asteroide1.bmp"), getImageAsSurface("images/asteroide1.bmp") }, renderer);
+		getImageAsSurface("images/asteroide2.bmp"), getImageAsSurface("images/asteroide3.bmp") }, renderer);
 	g.entities.push_front(&a1);
 
 	Bonus bonusAttackSpeed = Bonus(600-150, 1000-75, getImageAsSurface("images/attackspeed_bonus.bmp"), renderer );
@@ -177,7 +177,7 @@ int main(int argc, char** argv)
 
 		g.update();
 
-		if((rand() % 100) == 0){
+		if((rand() % 1000) == 0){
 				Bonus* newBonus = new Bonus(rand()%600, rand()%1000, getImageAsSurface("images/attackspeed_bonus.bmp"), renderer );
 				bonuses.push_front(newBonus);
 		}
