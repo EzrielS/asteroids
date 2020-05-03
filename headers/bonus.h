@@ -1,7 +1,6 @@
 #ifndef __BONUS_H__
 #define __BONUS_H__
 
-//#include <string>
 #include "point.h"
 
 /**
@@ -10,13 +9,10 @@
 class Bonus
 {
 	private:
-        SDL_Texture* _image;
-        SDL_Rect _hitBox;
-
-        //std::string _bonusName;
-        Point _coords;
-
-        SDL_Renderer* _renderer;
+		SDL_Texture* _image;
+		SDL_Rect _hitBox;
+		Point _coords;
+		SDL_Renderer* _renderer;
 
 	public:
 		/**

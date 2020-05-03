@@ -66,7 +66,7 @@ class Game
         /**
          * Fonction qui permet de terminer une partie
          */
-        static void end();
+        void end();
 };
 
 #endif

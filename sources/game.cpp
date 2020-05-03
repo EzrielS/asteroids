@@ -43,7 +43,7 @@ void Game::collisions(){
 						Ship* tempShip = dynamic_cast<Ship*>(*it2);
 						if(tempShip->getVie() <= 0) {
 								g.draw();
-								Game::end();
+								g.end();
 								g.quit = true;
 								print_str("You have lost", Point(375,250));
 								print_str("Closing in 10 seconds...", Point(300,300));
