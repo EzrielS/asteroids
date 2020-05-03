@@ -143,7 +143,7 @@ int main(int argc, char** argv)
 						case SDLK_DOWN:
 							e.slowDown(angleToVec(e.getAngle()));
 							break;
-						case SDLK_LALT:
+						case SDLK_LCTRL:
 							w1.fire();
 							break;
 						case SDLK_SPACE	:
