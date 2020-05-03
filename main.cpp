@@ -51,7 +51,7 @@ int main(int argc, char** argv)
 	g.init(renderer);
 
 	//Création du vaisseau
-	Ship e = Ship(300, 500, getImageAsSurface("images/vaisseau2.bmp"), renderer, 10);
+	Ship e = Ship(300, 500, getImageAsSurface("images/vaisseau.bmp"), renderer, 10);
 	e.setInertie(0.999);
 	g.entities.push_front(&e); // On ajoute le vaisseau dans la liste des entités
 
