@@ -19,6 +19,7 @@ class Ship : public Entity {
         virtual void update();
         virtual void draw();
 
+        bool shipInvincible = false;
         void giveWeapon(Weapon* w);
         int getVie();
         void setVie(int v);

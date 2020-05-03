@@ -1,3 +1,6 @@
+#ifndef __PRINTSTR__
+#define __PRINTSTR__
+
 #include "../headers/game.h"
 #include "../headers/point.h"
 #include "./simplex.cpp"
@@ -40,4 +43,4 @@ int print_str(std::string s, Point p){
 	return decal;
 }
 
-
+#endif

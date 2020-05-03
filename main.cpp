@@ -39,50 +39,8 @@ SDL_Surface* getImageAsSurface(const char * file){
 	return ret;
 }
 
-bool checkCollisions(SDL_Rect A, SDL_Rect B) {
-	//Les côtés des rectangles
-    int leftA, leftB;
-    int rightA, rightB;
-    int topA, topB;
-    int bottomA, bottomB;
- 
-    //Calcul les côtés du rectangle A
-    leftA = A.x;
-    rightA = A.x + A.w;
-    topA = A.y;
-    bottomA = A.y + A.h;
- 
-    //Calcul les côtés du rectangle B
-    leftB = B.x;
-    rightB = B.x + B.w;
-    topB = B.y;
-    bottomB = B.y + B.h;
 
-	//Tests de collisions
-    if( bottomA <= topB ) {
-        return false;
-    }
- 
-    if( topA >= bottomB ) {
-        return false;
-    }
- 
-    if( rightA <= leftB ) {
-        return false;
-    }
- 
-    if( leftA >= rightB ) {
-        return false;
-    }
- 
-    //Si collision détectée
-    return true;
-}
 
-void removeInvincibilityAfter2Seconds(bool& b) {
-	std::this_thread::sleep_for (std::chrono::seconds(2));
-	b = false;
-}
 
 int main(int argc, char** argv)
 {
@@ -119,9 +77,9 @@ int main(int argc, char** argv)
 
 	bool bonusActivated = false;
 	bool shipInvincible = false;
-	std::list<Bonus*> bonuses;
+//	std::list<Bonus*> g.bonuses;
 
-	while (!quit)
+	while (!g.quit)
 	{
 		SDL_RenderClear(renderer);
 		SDL_Event event;
@@ -154,7 +112,7 @@ int main(int argc, char** argv)
 					}
 					break;
 				case SDL_QUIT:
-					quit = true;
+					g.quit = true;
 					hard_quit = true;
 					break;
 			}
@@ -178,107 +136,18 @@ int main(int argc, char** argv)
 
 		if((rand() % 1000) == 0){
 				Bonus* newBonus = new Bonus(rand()%600, rand()%1000, getImageAsSurface("images/attackspeed_bonus.bmp"), renderer );
-				bonuses.push_front(newBonus);
+				g.bonuses.push_front(newBonus);
 		}
 
 
-		for (std::list<Bonus*>::iterator it=bonuses.begin(); it != bonuses.end(); ++it) {
+		for (std::list<Bonus*>::iterator it=g.bonuses.begin(); it != g.bonuses.end(); ++it) {
 			(*it)->draw();
 		}
 
-
-
-		for (std::list<Entity*>::iterator it=g.entities.begin(); it != g.entities.end(); ++it) { // Pour chaque entité
-
-			if (dynamic_cast<Asteroid*>(*it) != 0) { // Pour chaque asteroid
-				Asteroid* tempAsteroid = dynamic_cast<Asteroid*>(*it);
-
-				for (std::list<Entity*>::iterator it2=g.entities.begin(); it2 != g.entities.end(); ) { // On le compare avec les autres entités
-
-					bool bRemoved = false;
-
-					if(it != it2) { // On vérifie que ce n'est pas lui-même
-
-						if (dynamic_cast<Ship*>(*it2) != 0) { // Si l'entité est un vaisseau
-							Ship* tempShip = dynamic_cast<Ship*>(*it2);
-
-							if(tempShip->getVie() <= 0) {
-								g.draw();
-								Game::end();
-								quit = true;
-								print_str("You have lost", Point(375,250));
-								print_str("Closing in 10 seconds...", Point(300,300));
-							}
-						
-							if(!shipInvincible && checkCollisions( tempAsteroid->getRect(), tempShip->getRect() )) {  // S'il touche un vaisseau
-								std::cout << "Vaisseau touché par un asteroid" << std::endl;
-
-								tempShip->setVie(tempShip->getVie() - 1); // Le vaisseau perd 1 point de vie
-
-								// Le vaisseau est invincible pndant 2 secondes après être touché.
-								// Un thread s'occupe de modifier le booléen après 2 secondes pour ne pas bloquer le jeu.
-								shipInvincible = true;
-								std::thread t1(removeInvincibilityAfter2Seconds, std::ref(shipInvincible));
-								t1.detach();
-							}
-
-						} else if (dynamic_cast<Bullet*>(*it2) != 0) { // Si l'entité est une balle
-							Bullet* tempBullet = dynamic_cast<Bullet*>(*it2);
-
-							if(checkCollisions( tempAsteroid->getRect(), tempBullet->getRect() )) {  // S'il touche une bullet
-								std::cout << "Asteroid touché par une bullet" << std::endl;
-
-								tempAsteroid->gotHit(tempBullet->getDamage()); // L'asteroid prend les dégats de la balle
-								tempBullet->getParent()->addScore(1);
-								(*it2)->~Entity();
-								it2 = g.entities.erase(it2);
-								bRemoved = true;
-							}
-						}
-					}
-					if(!bRemoved){
-						++it2;
-					}
-				}
-				
-			} else if(dynamic_cast<Ship*>(*it) != 0) {  // Pour chaque vaisseau
-				Ship* tempShip = dynamic_cast<Ship*>(*it);
-
-				auto bon_it=bonuses.begin();
-				while(bon_it != bonuses.end()){
-					Bonus* tmpBonus = *bon_it;
-					if(checkCollisions( tempShip->getRect(), tmpBonus->getRect())){
-						std::cout << "Bonus touché par un Ship" << std::endl;
-						double vitesse = tempShip->getWeapons().front()->getVitesse();
-						tempShip->getWeapons().front()->setVitesse(vitesse*2);
-						delete tmpBonus;
-						bon_it = bonuses.erase(bon_it);
-					}
-					else{
-						bon_it++;
-					}
-				}
-			}
-
-				/*if(!bonusActivated && checkCollisions( tempShip->getRect(), bonusAttackSpeed.getRect() )) {  // S'il touche un bonus
-					std::cout << "Bonus touché par un Ship" << std::endl;
-					double vitesse = tempShip->getWeapons().front()->getVitesse();
-					tempShip->getWeapons().front()->setVitesse(vitesse*2);
-					bonusAttackSpeed.~Bonus();
-					bonusActivated = true;
-				}*/
-
-
-			if((*it)->getHealth() <= 0) { // Si l'entité n'a plus de vie, on l'a supprime
-				(*it)->~Entity();
-				g.entities.erase(it--);
-			}
-		}
+		g.collisions();
 
 		g.draw();
     	SDL_RenderPresent(renderer);
-//		draw(renderer);
-//		SDL_RenderPresent(renderer);
 		std::this_thread::sleep_for(std::chrono::milliseconds(25));
 
 	}
