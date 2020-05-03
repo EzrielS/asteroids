@@ -88,10 +88,10 @@ int main(int argc, char** argv)
 						case SDLK_DOWN:
 							e.slowDown(angleToVec(e.getAngle()));
 							break;
-						case SDLK_LCTRL:
+						case SDLK_SPACE:
 							w1.fire();
 							break;
-						case SDLK_SPACE	:
+						case SDLK_LCTRL: 
 							w2.fire();
 							break;
 						default:

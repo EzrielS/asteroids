@@ -49,7 +49,6 @@ void Game::collisions(){
 								print_str("Closing in 10 seconds...", Point(300,300));
 						}
 						if(!tempShip->shipInvincible && checkCollisions( tempAsteroid->getRect(), tempShip->getRect() )) {  // S'il touche un vaisseau
-								std::cout << "Vaisseau touché par un asteroid" << std::endl;
 								tempShip->setVie(tempShip->getVie() - 1); // Le vaisseau perd 1 point de vie
 								// Le vaisseau est invincible pndant 2 secondes après être touché.
 								// Un thread s'occupe de modifier le booléen après 2 secondes pour ne pas bloquer le jeu.
@@ -61,7 +60,6 @@ void Game::collisions(){
 					} else if (dynamic_cast<Bullet*>(*it2) != 0) { 		// Si l'entité est une balle
 						Bullet* tempBullet = dynamic_cast<Bullet*>(*it2);
 						if(checkCollisions( tempAsteroid->getRect(), tempBullet->getRect() )) {  // S'il touche une bullet
-							std::cout << "Asteroid touché par une bullet" << std::endl;
 							tempAsteroid->gotHit(tempBullet->getDamage()); // L'asteroid prend les dégats de la balle
 							tempBullet->getParent()->addScore(1);
 							(*it2)->~Entity();
@@ -81,7 +79,6 @@ void Game::collisions(){
 			while(bon_it != g.bonuses.end()){
 				Bonus* tmpBonus = *bon_it;
 				if(checkCollisions( tempShip->getRect(), tmpBonus->getRect())){
-					std::cout << "Bonus touché par un Ship" << std::endl;
 					double vitesse = tempShip->getWeapons().front()->getVitesse();
 					tempShip->getWeapons().front()->setVitesse(vitesse*2);
 					delete tmpBonus;
