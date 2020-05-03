@@ -108,9 +108,16 @@ int main(int argc, char** argv)
 		getImageAsSurface("images/tir1.bmp"), 
 		100,   // dmg
 		7.5,  // vitesse
-		5,	 // cooldown
+		15,	 // cooldown
 		50); // bullet health
+	Weapon w2 = Weapon(
+		getImageAsSurface("images/tir2.bmp"), 
+		100,   // dmg
+		6,  // vitesse
+		50,	 // cooldown
+		175); // bullet health
 	w1.bind(&e);
+	w2.bind(&e);
 
 	Asteroid a1 = Asteroid(	400, 400, std::list<SDL_Surface*> { getImageAsSurface("images/asteroide1.bmp"),
 		getImageAsSurface("images/asteroide2.bmp"), getImageAsSurface("images/asteroide3.bmp") }, renderer);
@@ -148,7 +155,7 @@ int main(int argc, char** argv)
 							e.slowDown(angleToVec(e.getAngle()));
 							break;
 						case SDLK_SPACE	:
-							w1.fire();
+							w2.fire();
 							break;
 						default:
 							break;
