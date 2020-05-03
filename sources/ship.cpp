@@ -44,7 +44,8 @@ int Ship::getVie(){
 }
 
 void Ship::setVie(int v) {
-	this->_nbVie = v;
+	if(this->getVie() > 0)
+		this->_nbVie = v;
 }
 
 int Ship::getScore(){

@@ -100,7 +100,7 @@ int main(int argc, char** argv)
 	g.init(renderer);
 
 
-	Ship e = Ship(300, 500, getImageAsSurface("images/vaisseau2.bmp"), renderer, 10);
+	Ship e = Ship(300, 500, getImageAsSurface("images/vaisseau2.bmp"), renderer, 2);
 	e.setInertie(0.999);
 	g.entities.push_front(&e);
 
@@ -169,8 +169,6 @@ int main(int argc, char** argv)
 		print_str("Nombre de vies : " + std::to_string(e.getVie()) + "   Score : " +  std::to_string(e.getScore()), Point(0, 0));
 
 
-
-
 //////////////////////
 
 
@@ -193,9 +191,17 @@ int main(int argc, char** argv)
 
 						if (dynamic_cast<Ship*>(*it2) != 0) { // Si l'entité est un vaisseau
 							Ship* tempShip = dynamic_cast<Ship*>(*it2);
+
+							if(tempShip->getVie() <= 0) {
+								Game::end();
+								quit = true;
+								print_str("You have lost", Point(375,250));
+								print_str("Closing in 10 seconds...", Point(300,300));
+							}
 						
 							if(!shipInvincible && checkCollisions( tempAsteroid->getRect(), tempShip->getRect() )) {  // S'il touche un vaisseau
 								std::cout << "Vaisseau touché par un asteroid" << std::endl;
+
 								tempShip->setVie(tempShip->getVie() - 1); // Le vaisseau perd 1 point de vie
 
 								// Le vaisseau est invincible pndant 2 secondes après être touché.
@@ -255,6 +261,9 @@ int main(int argc, char** argv)
 		std::this_thread::sleep_for(std::chrono::milliseconds(25));
 
 	}
+
+	std::this_thread::sleep_for(std::chrono::seconds(10));
+
 	SDL_Quit();
 
 	return 0;

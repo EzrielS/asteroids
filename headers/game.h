@@ -1,7 +1,7 @@
 #ifndef __GAME_H__
 #define __GAME_H__
 
-#include <list> 
+#include <list>
 
 class Game
 {
@@ -23,6 +23,7 @@ class Game
         void update();
         void draw();
         void init(SDL_Renderer* renderer);
+        static void end();
 };
 
 #endif

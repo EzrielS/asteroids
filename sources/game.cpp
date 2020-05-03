@@ -29,3 +29,11 @@ void Game::draw(){
 		(*it)->draw();
 	}
 }
+
+void Game::end() {
+	Game& g = Game::getInstance();
+
+	for (std::list<Entity*>::iterator it=g.entities.begin(); it != g.entities.end(); ++it) {
+		(*it)->setVitesse(Vec2d(0.,0.));
+	}
+}
