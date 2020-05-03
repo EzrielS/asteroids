@@ -114,8 +114,6 @@ int main(int argc, char** argv)
 		getImageAsSurface("images/asteroide2.bmp"), getImageAsSurface("images/asteroide3.bmp") }, renderer);
 	g.entities.push_front(&a1);
 
-	Bonus bonusAttackSpeed = Bonus(600-150, 1000-75, getImageAsSurface("images/attackspeed_bonus.bmp"), renderer );
-
 	bool quit = false;
 	bool hard_quit = false;
 
@@ -188,7 +186,6 @@ int main(int argc, char** argv)
 			(*it)->draw();
 		}
 
-//		bonusAttackSpeed.draw(); // TODO Gérer ça différément (un thread avec un timer aléatoire ??)
 
 
 		for (std::list<Entity*>::iterator it=g.entities.begin(); it != g.entities.end(); ++it) { // Pour chaque entité
@@ -206,6 +203,7 @@ int main(int argc, char** argv)
 							Ship* tempShip = dynamic_cast<Ship*>(*it2);
 
 							if(tempShip->getVie() <= 0) {
+								g.draw();
 								Game::end();
 								quit = true;
 								print_str("You have lost", Point(375,250));
