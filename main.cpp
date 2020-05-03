@@ -121,6 +121,7 @@ int main(int argc, char** argv)
 	bool quit = false;
 	bool bonusActivated = false;
 	bool shipInvincible = false;
+	std::list<Bonus*> bonuses;
 
 	while (!quit)
 	{
@@ -170,14 +171,21 @@ int main(int argc, char** argv)
 
 
 
-
 //////////////////////
-
 
 		g.update();
 
+		if((rand() % 100) == 0){
+				Bonus* newBonus = new Bonus(rand()%600, rand()%1000, getImageAsSurface("images/attackspeed_bonus.bmp"), renderer );
+				bonuses.push_front(newBonus);
+		}
 
-		bonusAttackSpeed.draw(); // TODO Gérer ça différément (un thread avec un timer aléatoire ??)
+
+		for (std::list<Bonus*>::iterator it=bonuses.begin(); it != bonuses.end(); ++it) {
+			(*it)->draw();
+		}
+
+//		bonusAttackSpeed.draw(); // TODO Gérer ça différément (un thread avec un timer aléatoire ??)
 
 
 		for (std::list<Entity*>::iterator it=g.entities.begin(); it != g.entities.end(); ++it) { // Pour chaque entité
@@ -227,22 +235,37 @@ int main(int argc, char** argv)
 				
 			} else if(dynamic_cast<Ship*>(*it) != 0) {  // Pour chaque vaisseau
 				Ship* tempShip = dynamic_cast<Ship*>(*it);
+				
 
-				if(!bonusActivated && checkCollisions( tempShip->getRect(), bonusAttackSpeed.getRect() )) {  // S'il touche un bonus
+
+
+				auto bon_it=bonuses.begin(); 
+					if(checkCollisions( tempShip->getRect(), tmpBonus->getRect())){
+						std::cout << "Bonus touché par un Ship" << std::endl;
+						double vitesse = tempShip->getWeapons().front()->getVitesse();
+						tempShip->getWeapons().front()->setVitesse(vitesse*2);
+						delete tmpBonus;
+						bon_it = bonuses.erase(bon_it);
+					}
+					else{
+						bon_it++;
+					}
+				}
+			}
+
+				/*if(!bonusActivated && checkCollisions( tempShip->getRect(), bonusAttackSpeed.getRect() )) {  // S'il touche un bonus
 					std::cout << "Bonus touché par un Ship" << std::endl;
 					double vitesse = tempShip->getWeapons().front()->getVitesse();
 					tempShip->getWeapons().front()->setVitesse(vitesse*2);
 					bonusAttackSpeed.~Bonus();
 					bonusActivated = true;
-				}
-			}
+				}*/
 
 
 			if((*it)->getHealth() <= 0) { // Si l'entité n'a plus de vie, on l'a supprime
 				(*it)->~Entity();
 				g.entities.erase(it--);
 			}
-
 		}
 
 		g.draw();
