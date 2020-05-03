@@ -239,7 +239,9 @@ int main(int argc, char** argv)
 
 
 
-				auto bon_it=bonuses.begin(); 
+				auto bon_it=bonuses.begin();
+				while(bon_it != bonuses.end()){
+					Bonus* tmpBonus = *bon_it;
 					if(checkCollisions( tempShip->getRect(), tmpBonus->getRect())){
 						std::cout << "Bonus touché par un Ship" << std::endl;
 						double vitesse = tempShip->getWeapons().front()->getVitesse();
