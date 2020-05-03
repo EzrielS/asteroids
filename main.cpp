@@ -17,17 +17,6 @@
 #include <math.h>  
 #include <time.h>
 
-/* A DELETE
-void draw(SDL_Renderer* renderer)
-{
-	int x,y;
-	if ( SDL_GetMouseState(&x,&y) & SDL_BUTTON(SDL_BUTTON_LEFT) ) // one & it is for bits AND
-	{
-		SDL_SetRenderDrawColor(renderer, 255,255,255,255);
-		SDL_RenderDrawPoint(renderer,x,y);
-	}
-}
-*/
 
 SDL_Surface* getImageAsSurface(const char * file){
 	SDL_Surface* ret = SDL_LoadBMP(file);
@@ -38,8 +27,6 @@ SDL_Surface* getImageAsSurface(const char * file){
 	SDL_SetColorKey(ret, SDL_TRUE, SDL_MapRGB(ret->format, 0, 0, 0));
 	return ret;
 }
-
-
 
 
 int main(int argc, char** argv)

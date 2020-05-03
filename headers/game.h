@@ -13,8 +13,8 @@ class Game
     public:
         SDL_Renderer* _renderer; // Le renderer de la Game
         std::list<Entity*> entities; // La liste des entités de la game
-	std::list<Bonus*> bonuses; // les bonus
- 	bool quit = false; // quittes-t-on
+        std::list<Bonus*> bonuses; // La liste des bonus
+        bool quit = false; // Booleen pour arrêter la partie
     private:
         Game(); // Constructeur privé de la classe
         ~Game(); // Constructeur privé de la classe
@@ -36,9 +36,6 @@ class Game
          * @return L'unique instance de la classe Game
          */
         static Game& getInstance();
-        
-
-        
 
         /**
          * Fonction qui permet d'ajouter une entité au jeu
