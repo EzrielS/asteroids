@@ -119,6 +119,8 @@ int main(int argc, char** argv)
 	Bonus bonusAttackSpeed = Bonus(600-150, 1000-75, getImageAsSurface("images/attackspeed_bonus.bmp"), renderer );
 
 	bool quit = false;
+	bool hard_quit = false;
+
 	bool bonusActivated = false;
 	bool shipInvincible = false;
 	std::list<Bonus*> bonuses;
@@ -154,6 +156,7 @@ int main(int argc, char** argv)
 					break;
 				case SDL_QUIT:
 					quit = true;
+					hard_quit = true;
 					break;
 			}
 		}
@@ -168,9 +171,6 @@ int main(int argc, char** argv)
 */
 
 		print_str("Nombre de vies : " + std::to_string(e.getVie()) + "   Score : " +  std::to_string(e.getScore()), Point(0, 0));
-
-
-
 
 //////////////////////
 
@@ -236,7 +236,6 @@ int main(int argc, char** argv)
 								bRemoved = true;
 							}
 						}
-
 					}
 					if(!bRemoved){
 						++it2;
@@ -245,9 +244,6 @@ int main(int argc, char** argv)
 				
 			} else if(dynamic_cast<Ship*>(*it) != 0) {  // Pour chaque vaisseau
 				Ship* tempShip = dynamic_cast<Ship*>(*it);
-				
-
-
 
 				auto bon_it=bonuses.begin();
 				while(bon_it != bonuses.end()){
@@ -278,23 +274,20 @@ int main(int argc, char** argv)
 				(*it)->~Entity();
 				g.entities.erase(it--);
 			}
-
 		}
 
 		g.draw();
-
     	SDL_RenderPresent(renderer);
-
-
 //		draw(renderer);
 //		SDL_RenderPresent(renderer);
 		std::this_thread::sleep_for(std::chrono::milliseconds(25));
 
 	}
 
-	std::this_thread::sleep_for(std::chrono::seconds(10));
+	if(!hard_quit)
+		std::this_thread::sleep_for(std::chrono::seconds(10));
 
 	SDL_Quit();
 
-	return 0;
+	exit(0);
 }
