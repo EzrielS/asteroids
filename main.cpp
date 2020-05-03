@@ -104,18 +104,9 @@ int main(int argc, char** argv)
 	e.setInertie(0.999);
 	g.entities.push_front(&e);
 
-	Weapon w1 = Weapon(
-		getImageAsSurface("images/tir1.bmp"), 
-		100,   // dmg
-		7.5,  // vitesse
-		15,	 // cooldown
-		50); // bullet health
-	Weapon w2 = Weapon(
-		getImageAsSurface("images/tir2.bmp"), 
-		100,   // dmg
-		6,  // vitesse
-		50,	 // cooldown
-		175); // bullet health
+	Weapon w1 = getGatling();
+	Weapon w2 = getLanceRocket();
+
 	w1.bind(&e);
 	w2.bind(&e);
 
@@ -153,6 +144,9 @@ int main(int argc, char** argv)
 							break;
 						case SDLK_DOWN:
 							e.slowDown(angleToVec(e.getAngle()));
+							break;
+						case SDLK_LALT:
+							w1.fire();
 							break;
 						case SDLK_SPACE	:
 							w2.fire();
@@ -239,7 +233,7 @@ int main(int argc, char** argv)
 								tempAsteroid->gotHit(tempBullet->getDamage()); // L'asteroid prend les dégats de la balle
 								tempBullet->getParent()->addScore(1);
 								(*it2)->~Entity();
-								//it2 = g.entities.erase(it2);
+								it2 = g.entities.erase(it2);
 								bRemoved = true;
 							}
 						}

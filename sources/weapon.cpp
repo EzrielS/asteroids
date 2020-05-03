@@ -42,3 +42,22 @@ void Weapon::update(){
 		(this->_currentCooldown)--;
 	}
 }
+SDL_Surface* getImageAsSurface(const char * file);
+
+Weapon getGatling(){
+	return Weapon(
+		getImageAsSurface("images/tir1.bmp"),
+		40,   // dmg
+		9.5,  // vitesse
+		5,	 // cooldown
+		50); // bullet health
+}
+
+Weapon getLanceRocket(){
+	return Weapon(
+		getImageAsSurface("images/tir2.bmp"), 
+		100,   // dmg
+		6,  // vitesse
+		50,	 // cooldown
+		175); // bullet health
+}
