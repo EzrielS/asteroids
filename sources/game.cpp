@@ -31,8 +31,10 @@ void removeInvincibilityAfter2Seconds(bool& b) {
 bool checkCollisions(SDL_Rect A, SDL_Rect B);
 void Game::collisions(){
 	Game& g = Game::getInstance();
+	int asteroidsCount = 0;
 	for (std::list<Entity*>::iterator it=g.entities.begin(); it != g.entities.end(); ++it) { // Pour chaque entité
 		if (dynamic_cast<Asteroid*>(*it) != 0) { // Pour chaque asteroid
+			asteroidsCount++;
 			Asteroid* tempAsteroid = dynamic_cast<Asteroid*>(*it);
 			for (std::list<Entity*>::iterator it2=g.entities.begin(); it2 != g.entities.end(); ) { // On le compare avec les autres entités
 
@@ -93,6 +95,12 @@ void Game::collisions(){
 			(*it)->~Entity();
 			g.entities.erase(it--);
 		}
+	}
+	// S'il ne reste plus aucun asteroid alors un nouveau apparaît
+	if(asteroidsCount == 0) {
+		Asteroid *newAsteroid = new Asteroid(rand()%600, rand()%1000, std::list<SDL_Surface*> { getImageAsSurface("images/asteroide1.bmp"),
+			getImageAsSurface("images/asteroide2.bmp"), getImageAsSurface("images/asteroide3.bmp") }, g._renderer);
+		g.entities.push_front(newAsteroid); // On ajoute l'asteroid dans la liste des entités
 	}
 }
 

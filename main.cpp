@@ -71,10 +71,12 @@ int main(int argc, char** argv)
 	// Booléens de vérification
 	bool hard_quit = false;
 	bool bonusActivated = false;
+	bool alreadySpawned = false;
 
 	while (!g.quit)
 	{
 		SDL_RenderClear(renderer);
+		int asteroidsCount = 0;
 		SDL_Event event;
 		// On écoute les touches appuyées
 		while (!g.quit && SDL_PollEvent(&event))
@@ -117,15 +119,17 @@ int main(int argc, char** argv)
 		SDL_RenderClear(renderer);
 		SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
 
+
 		// Affiche de l'HUD
 		print_str("Health : " + std::to_string(e.getVie()) + "   Score : " +  std::to_string(e.getScore()), Point(0, 0));
 
 		g.update(); // On update la position des entités
 
 		// Ajout d'un bonus aléatoirement
-		if((rand() % 1000) == 0){
-				Bonus* newBonus = new Bonus(rand()%600, rand()%1000, getImageAsSurface("images/attackspeed_bonus.bmp"), renderer );
-				g.bonuses.push_front(newBonus);
+		if(!alreadySpawned && (rand() % 1000) == 0){
+			Bonus* newBonus = new Bonus(rand()%600, rand()%1000, getImageAsSurface("images/attackspeed_bonus.bmp"), renderer );
+			g.bonuses.push_front(newBonus);
+			alreadySpawned = true;
 		}
 
 		// On vérifie les collisions entre les entités
