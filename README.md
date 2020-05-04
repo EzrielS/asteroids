@@ -11,7 +11,7 @@ mkdir build_projet
 cd build_projet
 cmake ../m1_asteroids
 make -j4
-./asteroid
+./asteroid -p num
 ```
 
 
