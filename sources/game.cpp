@@ -97,6 +97,11 @@ void Game::collisions(){
 }
 
 void Game::draw(){
+		// On dessine les bonus
+	for (std::list<Bonus*>::iterator it=this->bonuses.begin(); it != this->bonuses.end(); ++it) {
+		(*it)->draw();
+	}
+
 	for (std::list<Entity*>::iterator it=this->entities.begin(); it != this->entities.end(); ++it) {
 		(*it)->draw();
 	}

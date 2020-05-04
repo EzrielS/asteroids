@@ -69,17 +69,15 @@ int main(int argc, char** argv)
 	g.entities.push_front(&a1); // On ajoute l'asteroid dans la liste des entités
 
 	// Booléens de vérification
-	bool quit = false;
 	bool hard_quit = false;
 	bool bonusActivated = false;
-	bool shipInvincible = false;
 
 	while (!g.quit)
 	{
 		SDL_RenderClear(renderer);
 		SDL_Event event;
 		// On écoute les touches appuyées
-		while (!quit && SDL_PollEvent(&event))
+		while (!g.quit && SDL_PollEvent(&event))
 		{
 			switch(event.type)
 			{
@@ -128,11 +126,6 @@ int main(int argc, char** argv)
 		if((rand() % 1000) == 0){
 				Bonus* newBonus = new Bonus(rand()%600, rand()%1000, getImageAsSurface("images/attackspeed_bonus.bmp"), renderer );
 				g.bonuses.push_front(newBonus);
-		}
-
-		// On dessine les bonus
-		for (std::list<Bonus*>::iterator it=g.bonuses.begin(); it != g.bonuses.end(); ++it) {
-			(*it)->draw();
 		}
 
 		// On vérifie les collisions entre les entités
