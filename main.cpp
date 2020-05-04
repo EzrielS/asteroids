@@ -14,6 +14,7 @@
 #include "sources/entities/entity.cpp"
 #include "sources/print_string.cpp"
 
+#include <unistd.h>
 #include <math.h>
 #include <time.h>
 
@@ -32,14 +33,43 @@ SDL_Surface* getImageAsSurface(const char * file){
 	return ret;
 }
 
+void playSolo();
+void playMulti();
 
 int main(int argc, char** argv)
 {
+	if(argc != 3) {
+		std::cout << "usage: ./astroid -p num" << std::endl;
+		exit(0);
+	}
+
+	int c, numberOfPlayers = 0;
+	while ((c = getopt(argc, argv, "p:")) != -1) {
+		switch (c) {
+			case 'p': 
+				numberOfPlayers = atoi(optarg);
+				break;
+			default:
+				std::cout << "usage: ./astroid -p num" << std::endl;
+				exit(0);
+		}
+	}
+
+	if(numberOfPlayers ==1) {
+		playSolo();
+	} else if(numberOfPlayers == 2) {
+		playMulti();
+	} else {
+		std::cout << "Only one or two players" << std::endl;
+	}
+
 	srand(time(NULL));
 	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
 		return 0;
 	}
+}
 
+void playSolo() {
 	// Création de la fenêtre
 	SDL_Window* window = SDL_CreateWindow("Asteroids", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1000, 600,
 						  SDL_WINDOW_SHOWN|SDL_WINDOW_ALLOW_HIGHDPI);
@@ -152,14 +182,7 @@ int main(int argc, char** argv)
 	exit(0);
 }
 
-/*
-int main(int argc, char** argv)
-{
-	srand(time(NULL));
-	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-		return 0;
-	}
-
+void playMulti() {
 	// Création de la fenêtre
 	SDL_Window* window = SDL_CreateWindow("Asteroids", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1000, 600,
 						  SDL_WINDOW_SHOWN|SDL_WINDOW_ALLOW_HIGHDPI);
@@ -176,7 +199,7 @@ int main(int argc, char** argv)
 	g.entities.push_front(&e); // On ajoute le vaisseau dans la liste des entités
 
 	// Création du deuxième vaisseau
-	Ship e2 = Ship(300, 700, getImageAsSurface("images/vaisseau.bmp"), renderer, 10);
+	Ship e2 = Ship(300, 700, getImageAsSurface("images/vaisseau2.bmp"), renderer, 10);
 	e2.setInertie(0.999);
 	g.entities.push_front(&e2); // On ajoute le vaisseau dans la liste des entités
 
@@ -301,4 +324,3 @@ int main(int argc, char** argv)
 
 	exit(0);
 }
-*/
